@@ -46,7 +46,7 @@ DSH 每一轮对话都在产生事件：用户消息、模型回复、工具调�
 
 ```bash
 # 1) 放进 profile（路径按你的 DSH_HOME 调整）
-git clone <this repo> ~/.dsh/profiles/desktop/local/lc-station
+git clone https://github.com/liangchen-h/lc-station.git ~/.dsh/profiles/desktop/local/lc-station
 
 # 2) 确认 profile 的 cordis 配置里能加载到它（plugin/cordis.patch.yml 是包内自带的 insert 行）
 # 3) 在 DSH 的「插件」页里启用 lc-station，或在 profile 的 cordis.patch.yml 里 insert
