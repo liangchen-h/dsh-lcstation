@@ -1,12 +1,12 @@
 // 把实际部署的插件源码同步进本仓库的 plugin/ 目录。
-// 真源默认是 DSH profile 里的本地插件目录（$DSH_HOME/profiles/<profile>/local/lc-station），
+// 真源默认是 DSH profile 里的本地插件目录（$DSH_HOME/profiles/<profile>/local/dsh-lcstation），
 // 可用 LC_SRC 覆盖；本仓库只保存可提交的副本。
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
 
 const profile = process.env.DSH_PROFILE ?? "desktop";
-const SRC = process.env.LC_SRC ?? join(homedir(), ".dsh", "profiles", profile, "local", "lc-station");
+const SRC = process.env.LC_SRC ?? join(homedir(), ".dsh", "profiles", profile, "local", "dsh-lcstation");
 const DST = new URL("../plugin/", import.meta.url).pathname.replace(/^\//, "");
 
 if (!existsSync(SRC)) {

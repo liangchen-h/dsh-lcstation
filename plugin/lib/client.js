@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-	id: "lc-station",
+	id: "dsh-lcstation",
 	factory: (require) => {
 		var module = { exports: {} };
 		var exports = module.exports;
@@ -310,7 +310,7 @@ window.__ModuleLoader__.load({
 
 		/* ────────────────────────────── styles ────────────────────────────── */
 
-		const STYLE_TAG = "lc-station-styles";
+		const STYLE_TAG = "dsh-lcstation-styles";
 		const CSS = `
 .lcs-root {
   --lcs-bg: var(--dsw-alias-bg-base, #17181c);
@@ -812,7 +812,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 			let tag = document.querySelector('style[data-plugin-css="' + STYLE_TAG + '"]');
 			if (tag === null) {
 				tag = document.createElement("style");
-				tag.dataset.plugin = "lc-station";
+				tag.dataset.plugin = "dsh-lcstation";
 				tag.dataset.pluginCss = STYLE_TAG;
 				tag.textContent = CSS;
 				document.head.appendChild(tag);
@@ -3434,7 +3434,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 			return [view, setRightView];
 		}
 
-		/** 打开（或聚焦）右栏的 lc-station 页，并定位到某一格。返回错误文本，成功返回 null。 */
+		/** 打开（或聚焦）右栏的 dsh-lcstation 页，并定位到某一格。返回错误文本，成功返回 null。 */
 		function openRight(view, sessionId) {
 			setRightView(view);
 			if (typeof rightState.open !== "function") return T("右栏服务不可用（sidebarRight 未就绪）");
@@ -3482,7 +3482,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 				h(
 					"div",
 					{ className: "lcs-head" },
-					h("div", { className: "lcs-title" }, h("h1", null, T("工作站")), h("span", null, "lc-station")),
+					h("div", { className: "lcs-title" }, h("h1", null, T("工作站")), h("span", null, "dsh-lcstation")),
 					h(
 						"div",
 						{ className: "lcs-row", style: { gap: 8 } },
@@ -3557,10 +3557,10 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 		/* ────────────────────────────── apply ────────────────────────────── */
 
 		const inject = ["slots"];
-		const PANEL_ID = "lc-station";
+		const PANEL_ID = "dsh-lcstation";
 
 		function apply(ctx) {
-			ctx.effect(() => installStyles(), "lc-station: stylesheet");
+			ctx.effect(() => installStyles(), "dsh-lcstation: stylesheet");
 
 			ctx.effect(() => {
 				const disposers = [];
@@ -3606,7 +3606,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							try {
 								layoutFace?.openRightbar?.(true, false);
 							} catch (err) {
-								console.warn("lc-station: openRightbar failed", err);
+								console.warn("dsh-lcstation: openRightbar failed", err);
 							}
 							const options = { params: { view } };
 							const attempt = () => {
@@ -3614,7 +3614,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 									if (sessionId && typeof rightAxis.openTabIn === "function") rightAxis.openTabIn(sessionId, PANEL_ID, options);
 									else rightAxis.openTab(PANEL_ID, options);
 								} catch (err) {
-									console.warn("lc-station: openTab failed", err);
+									console.warn("dsh-lcstation: openTab failed", err);
 								}
 							};
 							setTimeout(attempt, 260);
@@ -3625,18 +3625,18 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						() =>
 							tabTypes.register({
 								id: PANEL_ID,
-								kind: "lc-station",
+								kind: "dsh-lcstation",
 								title: () => T("工作站"),
 								guide: [
 									{
-										id: "lc-station-pane",
+										id: "dsh-lcstation-pane",
 										order: 12,
 										title: () => T("工作站"),
 										description: () => T("画布 / 记忆 / 调用 / 产出，跟着当前对话走")
 									}
 								]
 							}),
-						"lc-station: right tab type"
+						"dsh-lcstation: right tab type"
 					);
 					scope.slots.inject("sidebar.right.pane.tab", () =>
 						scope.slots.register({ name: "sidebar.right.pane.tab", key: PANEL_ID }, RightPane)
@@ -3654,7 +3654,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						}
 					}
 				};
-			}, "lc-station: slots");
+			}, "dsh-lcstation: slots");
 		}
 
 		exports.apply = apply;

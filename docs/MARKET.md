@@ -15,23 +15,23 @@ DSH 的插件市场（`dshmarket` / `dsh-community-market`）不读本仓库，�
 
 1. Fork 并打开 <https://github.com/awesome-dsh-plugin/awesome-dsh-plugin>
 2. 在列表里按字母序加一条（Markdown 一行，与相邻条目同格式）
-3. 提 PR，标题形如 `Add lc-station`
+3. 提 PR，标题形如 `Add dsh-lcstation`
 
 可直接粘贴的条目：
 
 ```markdown
-- [lc-station](https://github.com/liangchen-h/lc-station) - DSH 工作站：把会话事件流折成卡片链画布，另有记忆 / 调用 / 产出三视图；界面中英双语，不占对话模型的调用预算。
+- [lc-station](https://github.com/liangchen-h/dsh-lcstation) - DSH 工作站：把会话事件流折成卡片链画布，另有记忆 / 调用 / 产出三视图；界面中英双语，不占对话模型的调用预算。
 ```
 
 英文版（如果列表只收英文描述）：
 
 ```markdown
-- [lc-station](https://github.com/liangchen-h/lc-station) - DSH workstation: folds the session event stream into a card-chain canvas, with memory / calls / outputs views and a bilingual (zh / en) UI. No model calls on the chat path.
+- [lc-station](https://github.com/liangchen-h/dsh-lcstation) - DSH workstation: folds the session event stream into a card-chain canvas, with memory / calls / outputs views and a bilingual (zh / en) UI. No model calls on the chat path.
 ```
 
 PR 描述里可以写：
 
-> Adds `lc-station` (MIT, public repo). Ships a Cordis bundle patch, mounts a Workstation page plus a session-scoped right pane. Bilingual UI, `Final output` panel summarized once per session. Install: `pnpm dsh plugin add` → pick from market, or `DSH_PROFILE=desktop node scripts/sync-plugin.mjs` for local development.
+> Adds `dsh-lcstation` (MIT, public repo). Ships a Cordis bundle patch, mounts a Workstation page plus a session-scoped right pane. Bilingual UI, `Final output` panel summarized once per session. Install: `pnpm dsh plugin add` → pick from market, or `DSH_PROFILE=desktop node scripts/sync-plugin.mjs` for local development.
 
 收录后市场会自动给出「安装」按钮（走 `npm` 或 `git+https` + 固定 commit，取决于索引里该版本的 `source`）。
 
@@ -42,12 +42,12 @@ PR 描述里可以写：
 本仓库带了一份符合 format 1 的索引：[`market/plugins.json`](../market/plugins.json)。把它放到任何能通过 HTTP 访问的位置，然后让 DSH 指向它：
 
 ```sh
-DSHM_REGISTRY_URL=https://your-host.example/lc-station/plugins.json dsh web
+DSHM_REGISTRY_URL=https://your-host.example/dsh-lcstation/plugins.json dsh web
 ```
 
 也可以把文件原样托管在对象存储、内网静态站点，或 `python -m http.server` 起个临时服务。
 
-索引里的 `source` 是 `git` 类型，所以安装时 pnpm 会拿 `git+https://github.com/liangchen-h/lc-station.git#<commit>&path:/plugin` —— 固定到具体 commit，不会悄悄跟着 `main` 漂移。
+索引里的 `source` 是 `git` 类型，所以安装时 pnpm 会拿 `git+https://github.com/liangchen-h/dsh-lcstation.git#<commit>&path:/plugin` —— 固定到具体 commit，不会悄悄跟着 `main` 漂移。
 
 想要发新版本时：
 
@@ -69,7 +69,7 @@ cd plugin
 npm publish --access public
 ```
 
-`plugin/package.json` 已带 `files`、`exports`、`dsh.bundle.patch`、`dsh.client`，`npm publish` 出来的包可直接被市场按 `lc-station@<version>` 安装。之后把索引里的 `source` 改成：
+`plugin/package.json` 已带 `files`、`exports`、`dsh.bundle.patch`、`dsh.client`，`npm publish` 出来的包可直接被市场按 `dsh-lcstation@<version>` 安装。之后把索引里的 `source` 改成：
 
 ```json
 { "type": "npm", "registry": "https://registry.npmjs.org" }

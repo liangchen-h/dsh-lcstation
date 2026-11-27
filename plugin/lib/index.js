@@ -1,5 +1,5 @@
 /**
- * lc-station — Host half.
+ * dsh-lcstation — Host half.
  *
  * Turns the Workstation's four ideas (canvas card flow / memory / calls /
  * outputs) into DSH plugin surfaces. Everything here is a *program*: the card
@@ -245,12 +245,12 @@ function onSessionEvent(session, event) {
 		const board = cards.boards.get(sessionId);
 		if (board !== undefined) schedulePersist(board);
 	} catch (error) {
-		ctx0?.logger?.warn?.(`lc-station: card fold failed for ${event?.type}: ${error instanceof Error ? error.message : error}`);
+		ctx0?.logger?.warn?.(`dsh-lcstation: card fold failed for ${event?.type}: ${error instanceof Error ? error.message : error}`);
 	}
 	try {
 		memory.observe(sessionId, event ?? {});
 	} catch (error) {
-		ctx0?.logger?.warn?.(`lc-station: memory fold failed for ${event?.type}: ${error instanceof Error ? error.message : error}`);
+		ctx0?.logger?.warn?.(`dsh-lcstation: memory fold failed for ${event?.type}: ${error instanceof Error ? error.message : error}`);
 	}
 }
 
@@ -472,7 +472,7 @@ function routes(ctx) {
 				}
 				json(res, {
 					ok: true,
-					plugin: "lc-station",
+					plugin: "dsh-lcstation",
 					version: VERSION,
 					pid: process.pid,
 					now: new Date().toISOString(),
@@ -1012,7 +1012,7 @@ function announceDevUrl(ctx) {
 	timer = setInterval(() => {
 		if (attempt() && timer !== undefined) clearInterval(timer);
 	}, 1500);
-	ctx.effect(() => () => clearInterval(timer), "lc-station: dev web url");
+	ctx.effect(() => () => clearInterval(timer), "dsh-lcstation: dev web url");
 }
 
 /** Host entry point. */
@@ -1034,7 +1034,7 @@ function apply(ctx) {
 			stopCards?.();
 			stopCreated?.();
 		};
-	}, "lc-station: session folding");
+	}, "dsh-lcstation: session folding");
 
 	ctx.effect(() => {
 		const disposers = routes(ctx).map((route) => ctx.webServer.register(guardRoute(route)));
@@ -1047,7 +1047,7 @@ function apply(ctx) {
 				}
 			}
 		};
-	}, "lc-station: http routes");
+	}, "dsh-lcstation: http routes");
 }
 
 export { apply, inject, VERSION };

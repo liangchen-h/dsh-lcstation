@@ -1,5 +1,5 @@
 {
-  "name": "lc-station",
+  "name": "dsh-lcstation",
   "version": "0.2.0",
   "description": "LC Workstation for DSH: card-chain canvas folded from the session event stream, plus memory / calls / outputs views, bilingual UI (zh / en). No model calls on the chat path.",
   "type": "module",
@@ -38,8 +38,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/liangchen-h/lc-station.git"
+    "url": "git+https://github.com/liangchen-h/dsh-lcstation.git"
   },
-  "homepage": "https://github.com/liangchen-h/lc-station#readme",
+  "homepage": "https://github.com/liangchen-h/dsh-lcstation#readme",
   "license": "MIT"
 }

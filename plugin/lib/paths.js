@@ -1,5 +1,5 @@
 /**
- * Shared paths + small file helpers for lc-station.
+ * Shared paths + small file helpers for dsh-lcstation.
  *
  * Everything the plugin touches lives under the user's DSH home or the
  * Workstation workspace; nothing outside those two roots is read or written.

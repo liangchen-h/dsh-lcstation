@@ -110,7 +110,7 @@ export function importIntoMemory(path, items) {
 	const existing = readText(path) ?? "";
 	const stamp = new Date().toISOString().slice(0, 19).replace("T", " ");
 	const lines = items.map((item) => `- [${item.kind ?? "note"}] ${String(item.text ?? "").replace(/\r?\n/g, " ")}`);
-	const block = `\n\n<!-- lc-station import ${stamp} -->\n${lines.join("\n")}\n`;
+	const block = `\n\n<!-- dsh-lcstation import ${stamp} -->\n${lines.join("\n")}\n`;
 	writeFileSync(path, existing + block, "utf8");
 	const readback = readFileSync(path, "utf8");
 	return { ok: true, path, backup, appended: block.trim(), readbackEndsWithBlock: readback.endsWith(block) };

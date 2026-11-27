@@ -56,17 +56,17 @@ The plugin is a profile-local DSH plugin: drop it under the profile's `local/` d
 
 ```bash
 # 1) clone into the profile (adjust the path to your DSH_HOME)
-git clone https://github.com/liangchen-h/lc-station.git ~/.dsh/profiles/desktop/local/lc-station
+git clone https://github.com/liangchen-h/dsh-lcstation.git ~/.dsh/profiles/desktop/local/dsh-lcstation
 
 # 2) make sure your profile's cordis config can load it (plugin/cordis.patch.yml holds the insert line)
-# 3) enable lc-station on the DSH Plugins page, or insert it in the profile's cordis.patch.yml
+# 3) enable dsh-lcstation on the DSH Plugins page, or insert it in the profile's cordis.patch.yml
 ```
 
 The repository keeps two copies: `plugin/` is the committable copy, the directory under the profile is what
 actually loads. Sync them with:
 
 ```bash
-LC_SRC=~/.dsh/profiles/desktop/local/lc-station node scripts/sync-plugin.mjs
+LC_SRC=~/.dsh/profiles/desktop/local/dsh-lcstation node scripts/sync-plugin.mjs
 ```
 
 ## Configuration

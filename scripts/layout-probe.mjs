@@ -8,7 +8,7 @@ import vm from "node:vm";
 const PORT = process.env.DSH_PORT ?? "57702";
 const SRC =
 	process.env.LC_CLIENT ??
-	join(homedir(), ".dsh", "profiles", process.env.DSH_PROFILE ?? "desktop", "local", "lc-station", "lib", "client.js");
+	join(homedir(), ".dsh", "profiles", process.env.DSH_PROFILE ?? "desktop", "local", "dsh-lcstation", "lib", "client.js");
 
 async function loadCards() {
 	const file = process.argv[2];
