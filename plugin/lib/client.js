@@ -287,6 +287,24 @@ window.__ModuleLoader__.load({
 		};
 		let LANG = typeof localStorage === "undefined" ? "zh" : localStorage.getItem("lcs-lang") === "en" ? "en" : "zh";
 		const T = (text) => (LANG === "en" && Object.prototype.hasOwnProperty.call(EN_DICT, text) ? EN_DICT[text] : text);
+		const langListeners = new Set();
+		function setLangGlobal(next) {
+			LANG = next;
+			try {
+				localStorage.setItem("lcs-lang", next);
+			} catch {}
+			langListeners.forEach((fn) => fn(next));
+		}
+		function useLang() {
+			const [value, setValue] = useState(LANG);
+			useEffect(() => {
+				const fn = (next) => setValue(next);
+				langListeners.add(fn);
+				setValue(LANG);
+				return () => langListeners.delete(fn);
+			}, []);
+			return value;
+		}
 
 		const { useState, useEffect, useRef, useMemo, useCallback, memo } = React;
 
@@ -337,8 +355,7 @@ window.__ModuleLoader__.load({
 }
 .lcs-pane-title { font-size: 13px; font-weight: 650; letter-spacing: .2px; }
 .lcs-tabs-sm { margin-left: auto; padding: 2px; border-radius: 8px; }
-.lcs-lang { margin-left: 6px; }
-.lcs-lang .lcs-tab { min-width: 30px; text-align: center; padding: 4px 6px; font-size: 11.5px; }
+.lcs-lang { margin-right: 4px; min-width: 46px; justify-content: center; font-size: 11px; padding: 3px 8px; }
 .lcs-tabs-sm .lcs-tab { padding: 4px 9px; font-size: 11.5px; border-radius: 6px; }
 .lcs-tabs-sm .lcs-tab[data-active="true"]::before { width: 4px; height: 4px; margin-right: 5px; }
 .lcs-pane .lcs-body { padding: 8px 10px 10px; }
@@ -3445,27 +3462,11 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 			const [tab, setTab] = useState("canvas");
 			const [sessionId, setSessionId] = useState(null);
 			const [err, setErr] = useState(null);
-			const [lang, setLang] = useState(LANG);
-			LANG = lang;
-			const pickLang = (next) => {
-				LANG = next;
-				try {
-					localStorage.setItem("lcs-lang", next);
-				} catch {
-					/* private mode: the switch still works for this render */
-				}
-				setLang(next);
-			};
+			const lang = useLang();
 			const langSwitch = h(
-				"div",
-				{ className: "lcs-tabs lcs-tabs-sm lcs-lang" },
-				["zh", "en"].map((code) =>
-					h(
-						"button",
-						{ key: code, className: "lcs-tab", "data-active": String(lang === code), title: code === "zh" ? "中文" : "English", onClick: () => pickLang(code) },
-						code === "zh" ? "中" : "EN"
-					)
-				)
+				"button",
+				{ className: "lcs-btn lcs-lang", title: lang === "zh" ? "Switch to English" : "切换到中文", onPointerDown: (ev) => { ev.preventDefault(); ev.stopPropagation(); setLangGlobal(lang === "zh" ? "en" : "zh"); } },
+				lang === "zh" ? "EN" : "中文"
 			);
 			const { data } = useJson("/lc/sessions", 4000);
 
@@ -3495,10 +3496,10 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 								)
 							: h("span", { className: "lcs-note" }, T("暂无活动会话"))
 					),
-					langSwitch,
 					h(
 						"div",
 						{ className: "lcs-tabs" },
+						langSwitch,
 						TABS.map((item) =>
 							h("button", { key: item.id, className: "lcs-tab", "data-active": String(tab === item.id), onClick: () => setTab(item.id) }, T(item.label))
 						)
@@ -3522,27 +3523,11 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 		function RightPane(props) {
 			const sessionId = props && props.sessionId ? props.sessionId : null;
 			const [tab, setTab] = useRightView();
-			const [lang, setLang] = useState(LANG);
-			LANG = lang;
-			const pickLang = (next) => {
-				LANG = next;
-				try {
-					localStorage.setItem("lcs-lang", next);
-				} catch {
-					/* private mode */
-				}
-				setLang(next);
-			};
+			const lang = useLang();
 			const langSwitch = h(
-				"div",
-				{ className: "lcs-tabs lcs-tabs-sm lcs-lang" },
-				["zh", "en"].map((code) =>
-					h(
-						"button",
-						{ key: code, className: "lcs-tab", "data-active": String(lang === code), title: code === "zh" ? "中文" : "English", onClick: () => pickLang(code) },
-						code === "zh" ? "中" : "EN"
-					)
-				)
+				"button",
+				{ className: "lcs-btn lcs-lang", title: lang === "zh" ? "Switch to English" : "切换到中文", onPointerDown: (ev) => { ev.preventDefault(); ev.stopPropagation(); setLangGlobal(lang === "zh" ? "en" : "zh"); } },
+				lang === "zh" ? "EN" : "中文"
 			);
 			return h(
 				"div",
@@ -3555,11 +3540,11 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					h(
 						"div",
 						{ className: "lcs-tabs lcs-tabs-sm" },
+						langSwitch,
 						TABS.map((item) =>
 							h("button", { key: item.id, className: "lcs-tab", "data-active": String(tab === item.id), onClick: () => setTab(item.id) }, T(item.label))
 						)
 					),
-					langSwitch
 				),
 				h(StationBody, { tab, sessionId })
 			);
