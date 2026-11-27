@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "title": {
+    "en": "LC Station index",
+    "zh": "LC Station 索引"
+  },
+  "description": {
+    "en": "Self-hosted plugin market index for lc-station.",
+    "zh": "lc-station 的自托管插件市场索引。"
+  },
+  "metadata": {
+    "categories": {
+      "observability": { "title": { "en": "Observability", "zh": "观测" } },
+      "workspace": { "title": { "en": "Workspace", "zh": "工作区" } }
+    },
+    "labels": {
+      "bilingual": { "title": { "en": "Bilingual", "zh": "中英双语" } },
+      "local-only": { "title": { "en": "Local only", "zh": "纯本地" } }
+    }
+  },
+  "plugins": [
+    {
+      "name": "lc-station",
+      "title": {
+        "en": "LC Station",
+        "zh": "LC 工作站"
+      },
+      "description": {
+        "en": "Folds the session event stream into a card-chain canvas, plus memory / calls / outputs views. Bilingual UI, no model calls on the chat path.",
+        "zh": "把会话事件流折成卡片链画布，另有记忆 / 调用 / 产出三视图。界面中英双语，不占对话模型的调用预算。"
+      },
+      "author": "Liangchen",
+      "homepage": "https://github.com/liangchen-h/lc-station#readme",
+      "repository": {
+        "url": "https://github.com/liangchen-h/lc-station.git",
+        "directory": "plugin"
+      },
+      "metadata": {
+        "category": "observability",
+        "keywords": ["workstation", "canvas", "card-chain", "session-events", "outputs", "i18n"],
+        "labels": ["bilingual", "local-only"]
+      },
+      "versions": [
+        {
+          "version": "0.2.0",
+          "publishTimestamp": 1795767600,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/liangchen-h/lc-station.git",
+            "commit": "fddbb91e99a9bdcd4d27262741c59200801e06c9",
+            "path": "plugin"
+          },
+          "engines": {
+            "dsh": "*"
+          }
+        }
+      ]
+    }
+  ]
+}
