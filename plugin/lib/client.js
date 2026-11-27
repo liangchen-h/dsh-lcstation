@@ -7,6 +7,287 @@ window.__ModuleLoader__.load({
 
 		const React = require("react");
 		const h = React.createElement;
+
+		/* ────────────────────────────── i18n ────────────────────────────── */
+
+		const EN_DICT = {
+			"秒前": "s ago",
+			"分钟前": "m ago",
+			"小时前": "h ago",
+			"天前": "d ago",
+			"第 ": "Turn ",
+			" 轮": "",
+			"个动作": " actions",
+			"步骤 ": "Step ",
+			"展开": "Expand",
+			"你说": "You",
+			"计划": "Plan",
+			"步 ": "Step ",
+			"结果": "Result",
+			"读": "Read",
+			"写": "Write",
+			"跑": "Run",
+			"联网": "Web",
+			"子体": "Sub",
+			"工具": "Tool",
+			"待办": "Todo",
+			"产出": "Outputs",
+			"备注": "Note",
+			"轮次": "Turn",
+			"回复": "Reply",
+			"后台": "Job",
+			"压缩": "Compact",
+			" · 并行 ": " · parallel ",
+			" 路": "",
+			"组内节点及依赖预览": "Nodes and dependencies in this group",
+			"未命名": "Untitled",
+			"条目详情": "Item",
+			" 项": " items",
+			" · 单链": " · single chain",
+			"返回上一级": "Back",
+			"← 返回": "← Back",
+			"内容": "Content",
+			"参数": "Args",
+			"按住拖动卡片": "Drag to move",
+			"⠿  拖动": "⠿  Drag",
+			" · 步 ": " · step ",
+			"还没有活动会话。开一个对话，这里会实时长出卡片链。": "No active session yet. Start a conversation and the card chain grows here live.",
+			"取数失败：": "Fetch failed: ",
+			"这个会话暂时没有卡片。": "No cards for this session yet.",
+			"从会话历史重建": "Rebuild from history",
+			"卡片由插件的规则引擎从 session/event 折叠，不经过模型；已有历史会被直接装回来，不用等新事件。": "Cards are folded from session/event by a rule engine, no model involved. Existing history is loaded straight back, no need to wait for new events.",
+			"链 ": "Chain ",
+			"任务链 ": "Task chain ",
+			"时间线与搜索": "Timeline and search",
+			"时间线": "Timeline",
+			"搜关键字：命令 / 文件名 / 报错…": "Search: command / file / error…",
+			"匹配 ": "Match ",
+			" 条": " hits",
+			"没有匹配的卡。": "No matching cards.",
+			"自适应": "Fit",
+			"横向连线 = 骨干：轮次从左往右推进 · 点开进小画布": "Horizontal links = backbone: turns flow left to right · click to open",
+			"一块颜色 = 一组，点开在画布里变成小画布": "One color = one group; click to expand into a sub-canvas",
+			"拖拽平移 · 滚轮缩放 · 双击自适应": "Drag to pan · wheel to zoom · double-click to fit",
+			"共 ": "",
+			" 张卡 · ": " cards · ",
+			" 轮 · 画面上 ": " turns · on screen ",
+			" 块": " groups",
+			"（无输出）": "(no output)",
+			"运行中…": "Running…",
+			"（无回显）": "(no echo)",
+			"（还没回报）": "(no report yet)",
+			"还没有步骤": "No steps yet",
+			"跑程": "Runs",
+			"分支 ": "Branch ",
+			"串": "seq",
+			"并": "par",
+			" 轮 · 步 ": " turn · step ",
+			"已保存 · 回读一致 ": "Saved · read-back matches ",
+			" · 备份 ": " · backup ",
+			"保存失败：": "Save failed: ",
+			"先勾选要导入的条目": "Select items to import first",
+			"已追加 ": "Appended ",
+			" 条 · 备份 ": " items · backup ",
+			"追加失败：": "Append failed: ",
+			"没有改动": "No changes",
+			"已写入 ": "Wrote ",
+			" 条编辑覆盖": " edited entries",
+			"写入失败：": "Write failed: ",
+			"加载中…": "Loading…",
+			"跨对话记忆": "Cross-session memory",
+			"磁盘上的记忆文件": "Memory files on disk",
+			"本次注入": "Injected this session",
+			"本会话观察到的注入内容": "Content injected in this session",
+			"对话中的候选记忆": "Candidates from the conversation",
+			"从对话提取的候选，需自行确认": "Extracted from the conversation; confirm before importing",
+			"子智能体记录": "Subagent records",
+			"实际观察到的调用和回报": "Observed calls and reports",
+			"← 返回记忆目录": "← Back to memory",
+			"① 跨对话记忆": "1. Cross-session memory",
+			"可直接编辑并保存，保存前自动备份": "Editable; backed up automatically before saving",
+			" (缺失)": " (missing)",
+			"保存": "Save",
+			"② 本次对话导入的跨对话记忆": "2. Memory injected into this session",
+			"本会话启动时被注入的内容，只读快照": "Read-only snapshot of what was injected at session start",
+			"本会话没有观察到 system/developer 注入事件（可能早于插件启动）。": "No system/developer injection observed in this session (it may predate the plugin).",
+			" 字": " chars",
+			"（已截断）": "(truncated)",
+			"③ 对话中的记忆": "3. Memory from the conversation",
+			"规则引擎从事件里抽取，可改、可勾选后导入 ①": "Extracted by the rule engine; edit and import into section 1",
+			"本会话还没抽到偏好/约束/决定。规则只认明确句式，宁缺不猜。": "No preference/constraint/decision extracted yet. Rules only match explicit phrasing.",
+			"用户": "User",
+			"助手": "Assistant",
+			" · 已编辑": " · edited",
+			"追加到：": "Append to: ",
+			"保存本条编辑": "Save this edit",
+			"导入到跨对话记忆": "Import into cross-session memory",
+			"④ 子智能体记录": "4. Subagent records",
+			"观察到的子智能体调用参数和回报，并非子体全部记忆": "Observed subagent args and reports; not their full memory",
+			"尚未观察到子智能体调用；插件启动前的记录可能未载入。": "No subagent calls observed yet; records from before the plugin started may be missing.",
+			" → 进行中": " → running",
+			"任务：": "Task: ",
+			"回报：": "Report: ",
+			"文件来源：": "Files from: ",
+			"已切换并回读确认：": "Switched and verified: ",
+			"接口接受但回读不一致：": "Accepted but read-back differs: ",
+			"失败：": "failed: ",
+			"已切换并回读：": "Switched: ",
+			"删除 cap/tool 条目「": "Delete cap/tool entry \"",
+			"」？会先备份再移走。": "\"? It is backed up before being moved.",
+			"已删除（备份 ": "Deleted (backup ",
+			"新 cap/tool 条目名（不含路径）：": "New cap/tool entry name (no path):",
+			"内容（可留空）：": "Content (optional):",
+			"已创建 ": "Created ",
+			"登记一个可执行文件的完整路径：": "Full path of the executable:",
+			"显示名：": "Display name:",
+			"已登记：": "Registered: ",
+			"本对话使用 ": "Used in this chat ",
+			"全部库 ": "Whole library ",
+			"只统计这个会话的卡片（读/写/跑/联网/子体/工具），按次数排序": "Counts cards of this session only (read/write/run/web/sub/tool), sorted by count",
+			"上：插件与 bundle　下左：skills　下右：可执行程序；每块各自搜索、各自滚动": "Top: plugins and bundles · bottom-left: skills · bottom-right: programs. Each pane searches and scrolls on its own.",
+			"本对话用过的调用": "Calls used in this chat",
+			" 类": " kinds",
+			"这个会话还没有可统计的调用。": "No calls to count in this session yet.",
+			"最后出现：第 ": "Last seen: turn ",
+			" 个 · Harness skill 注册表": " · Harness skill registry",
+			"搜索 skill": "Search skills",
+			"没有读出 skill。": "Could not read skills.",
+			"没有匹配「": "No skill matching \"",
+			"」的 skill。": "\".",
+			"启用": "Enable",
+			"插件与 bundle": "Plugins & bundles",
+			" 个 · 启停走 dsh 的插件管理器": " · toggled through the DSH plugin manager",
+			"搜索插件": "Search plugins",
+			"停用": "Disable",
+			"不由插件管理器直接管理": "Not managed by the plugin manager",
+			"只读：": "Read-only: ",
+			"显示更多（还有 ": "Show more (",
+			" 个）": " left)",
+			"cap/tool 说明条目": "cap/tool entries",
+			" 条 · 工作区 <WS>/cap/tool 下的工具说明，不是可执行文件": " · tool notes under <WS>/cap/tool, not executables",
+			"搜索工具条目": "Search entries",
+			"新增": "Add",
+			"cap/tool 为空或不存在。": "cap/tool is empty or missing.",
+			"已停用": "Disabled",
+			"删除": "Delete",
+			"可执行程序": "Programs",
+			"PATH 扫描 ": "PATH scan ",
+			" 个，当前显示 ": ", showing ",
+			" 个 · 拖到对话输入框可导入": " · drag into the composer to import",
+			"过滤程序名或路径": "Filter name or path",
+			"登记程序": "Register program",
+			"按住后拖到 DSH 对话输入框即可作为文件导入；单击复制路径": "Press and drag into the DSH composer to import as a file; click to copy the path",
+			"构造拖拽负载失败：": "Failed to build drag payload: ",
+			"文件还没读完，松手后重拖一次（约半秒），或单击复制路径": "File not ready; drop and drag again (about half a second), or click to copy the path",
+			"已复制路径：": "Path copied: ",
+			"复制失败：": "Copy failed: ",
+			"本会话观察到的写入": "Writes observed this session",
+			"疑似临时文件": "Likely temp files",
+			"备份或版本文件": "Backups / versions",
+			"其他扫描文件": "Other scanned files",
+			"全部类型": "All types",
+			"已在资源管理器定位": "Revealed in Explorer",
+			"已交给系统程序打开": "Opened with the system program",
+			"读取失败：": "Read failed: ",
+			"已移走（回读：": "Moved away (read-back: ",
+			"预览失败：": "Preview failed: ",
+			"清理 ": "Clean up ",
+			" 个文件（合计 ": " files (total ",
+			"）？会先备份再改名，不会直接删除。": ")? They are backed up and renamed, not deleted.",
+			"清理完成：移走 ": "Done: moved ",
+			" 个，合计 ": " files, total ",
+			"；失败 ": "; failed ",
+			"查询失败：": "Query failed: ",
+			"这个文件没有本插件的备份，无法回滚。": "No plugin backup for this file; cannot roll back.",
+			"找到 ": "Found ",
+			" 个备份，最新一个是 ": " backups, newest is ",
+			"已恢复并回读校验：": "Restored and verified: ",
+			"恢复失败：": "Restore failed: ",
+			"最终产出": "Final output",
+			"还没有结束标记": "No end marker yet",
+			"在对话里单独发一条「发送」「结束」或 /end，这一段写完的文件会汇总到最上面这里。": "Send \"sent\", \"done\" or /end as its own message; files written in this conversation are collected here.",
+			"正在把整段对话归纳成一句话…": "Summarising the conversation in one line…",
+			"这一段没有观察到写文件。": "No file writes observed in this session.",
+			"文件已不存在": "File is gone",
+			"定位": "Reveal",
+			"阅读": "Read",
+			"打开": "Open",
+			"扫描中…": "Scanning…",
+			"这些是限定目录中的扫描结果，并非全部经过确认的产出；写入记录覆盖插件观察到的会话事件，备份文件也不等于可回滚版本。": "These are scans of bounded directories, not confirmed deliverables. Write records cover the session events this plugin observed; a backup file is not the same as a restorable version.",
+			" 个文件 · 扫描于 ": " files · scanned at ",
+			" · 本会话写过 ": " · written this session ",
+			"按对话轮查看变更": "Changes by turn",
+			"基于宿主记录；已释放的快照标记为不可用": "From host records; released snapshots are marked unavailable",
+			"当前会话未连接到宿主变更记录。": "This session is not connected to host change records.",
+			"此会话尚无可查的工作区变更记录。": "No workspace change records for this session yet.",
+			"版本 ": "Version ",
+			"按轮可回滚的文件": "Restorable files by turn",
+			"插件在写文件前复制的前像；恢复时原内容会另存一份": "Pre-images copied before a write; current content is saved aside when restoring",
+			"本次载入后尚未观察到写文件调用，没有可回滚的前像。": "No write calls observed since load; nothing to roll back.",
+			" 轮 · ": " turn · ",
+			" 个文件": " files",
+			"恢复到这一轮之前": "Restore to before this turn",
+			"文件类型": "File type",
+			"文档": "Docs",
+			"图片": "Images",
+			"代码": "Code",
+			"文本与数据": "Text & data",
+			"其他类型": "Other",
+			" 项；类型按扩展名识别": " items; type detected by extension",
+			"全选当前列表": "Select all",
+			"清除选择": "Clear selection",
+			"预览清理 ": "Preview cleanup ",
+			"只处理勾选的文件；先备份到 lc-plugin/backups，再改名为 .retired-时间戳": "Only checked files; backed up to lc-plugin/backups, then renamed to .retired-<stamp>",
+			"清理预览": "Cleanup preview",
+			" 个 · 合计 ": " files · total ",
+			"已不存在": "Gone",
+			"确认清理 ": "Confirm cleanup ",
+			"取消": "Cancel",
+			"备份": "Backups",
+			"没有本插件的备份，无法从这里恢复。": "No plugin backup; cannot restore from here.",
+			"恢复这个备份": "Restore this backup",
+			"关闭": "Close",
+			"用系统程序打开": "Open with system program",
+			"这个类型没有内置阅读器（": "No built-in reader for this type (",
+			"），请用系统程序打开。": "); open it with the system program.",
+			"这一分类下没有文件。": "No files in this category.",
+			" 个版本": " versions",
+			"查备份": "Backups",
+			"移出": "Retire",
+			"画布": "Canvas",
+			"记忆": "Memory",
+			"调用": "Calls",
+			"右栏服务不可用（sidebarRight 未就绪）": "Right-pane service unavailable (sidebarRight not ready)",
+			"openTab 失败：": "openTab failed: ",
+			"工作站": "Workstation",
+			" 张 · ": " cards · ",
+			"暂无活动会话": "No active session",
+			"画布：session/event 增量折叠，只增不改": "Canvas: session/event folded incrementally, append-only",
+			"记忆：磁盘 + 事件规则抽取，可改可导入": "Memory: disk + rule extraction, editable and importable",
+			"调用：读活服务，改动回读确认": "Calls: live services, changes verified by read-back",
+			"产出：有界扫描，定位/阅读/比版本": "Outputs: bounded scan, reveal / read / compare versions",
+			"当前对话": "This chat",
+			"最近对话": "Recent chats",
+			"画布 / 记忆 / 调用 / 产出，跟着当前对话走": "Canvas / memory / calls / outputs follow the current chat",
+			" 秒前": "s ago",
+			" 分钟前": "m ago",
+			" 小时前": "h ago",
+			" 天前": "d ago",
+			" 个动作": " actions",
+			"  (缺失)": " (missing)",
+			" 轮开始": " turn started",
+			"还原": "Revert",
+			"（服务不可用）": " (service unavailable)",
+			"把这行移出产出目录？会先备份。\n": "Move this out of the outputs folder? It is backed up first.\n",
+			"用这个备份覆盖当前文件？\n备份：": "Overwrite the current file with this backup?\nBackup: ",
+			"\n当前：": "\nCurrent: ",
+			"历史记录的快照已释放": "the history snapshot was released",
+			" 个": " files",
+			"当前显示 ": "Showing "
+		};
+		let LANG = typeof localStorage === "undefined" ? "zh" : localStorage.getItem("lcs-lang") === "en" ? "en" : "zh";
+		const T = (text) => (LANG === "en" && Object.prototype.hasOwnProperty.call(EN_DICT, text) ? EN_DICT[text] : text);
+
 		const { useState, useEffect, useRef, useMemo, useCallback, memo } = React;
 
 		/* ────────────────────────────── styles ────────────────────────────── */
@@ -56,6 +337,8 @@ window.__ModuleLoader__.load({
 }
 .lcs-pane-title { font-size: 13px; font-weight: 650; letter-spacing: .2px; }
 .lcs-tabs-sm { margin-left: auto; padding: 2px; border-radius: 8px; }
+.lcs-lang { margin-left: 6px; }
+.lcs-lang .lcs-tab { min-width: 30px; text-align: center; padding: 4px 6px; font-size: 11.5px; }
 .lcs-tabs-sm .lcs-tab { padding: 4px 9px; font-size: 11.5px; border-radius: 6px; }
 .lcs-tabs-sm .lcs-tab[data-active="true"]::before { width: 4px; height: 4px; margin-right: 5px; }
 .lcs-pane .lcs-body { padding: 8px 10px 10px; }
@@ -529,10 +812,10 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 		function relTime(ms) {
 			if (typeof ms !== "number" || ms <= 0) return "";
 			const diff = Date.now() - ms;
-			if (diff < 60e3) return Math.max(0, Math.round(diff / 1000)) + " 秒前";
-			if (diff < 3600e3) return Math.round(diff / 60e3) + " 分钟前";
-			if (diff < 86400e3) return Math.round(diff / 3600e3) + " 小时前";
-			return Math.round(diff / 86400e3) + " 天前";
+			if (diff < 60e3) return Math.max(0, Math.round(diff / 1000)) + T(" 秒前");
+			if (diff < 3600e3) return Math.round(diff / 60e3) + T(" 分钟前");
+			if (diff < 86400e3) return Math.round(diff / 3600e3) + T(" 小时前");
+			return Math.round(diff / 86400e3) + T(" 天前");
 		}
 
 		function fmtSize(n) {
@@ -709,13 +992,13 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 				id: "turn-" + turn,
 				turn,
 				hue: turnHue(turn),
-				title: "第 " + turn + " 轮",
+				title: T("第 ") + turn + T(" 轮"),
 				count,
 				intro,
 				plan,
 				outro,
 				items,
-				desc: intro || outro || plan || count + " 个动作"
+				desc: intro || outro || plan || count + T(" 个动作")
 			};
 		}
 
@@ -771,7 +1054,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 				return turn.items.map((item, index) => {
 					const cards = item.kind === "card" ? [item.card] : item.cards;
 					const first = cards[0];
-					return { ...turn, id: "turn-" + band + "-" + (item.kind === "card" ? first.id : "step-" + item.step), item, cards, title: item.kind === "card" ? first.title : "步骤 " + item.step, desc: short(first.sub || first.title, 70), count: cards.length, items: item.kind === "group" ? groupChildren(item.cards, item.step) : [] };
+					return { ...turn, id: "turn-" + band + "-" + (item.kind === "card" ? first.id : "step-" + item.step), item, cards, title: item.kind === "card" ? first.title : T("步骤 ") + item.step, desc: short(first.sub || first.title, 70), count: cards.length, items: item.kind === "group" ? groupChildren(item.cards, item.step) : [] };
 				});
 			});
 		}
@@ -1251,11 +1534,11 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					"div",
 					{ className: "lcs-tcard-top" },
 					h("span", { className: "lcs-tcard-no" }, turn.title),
-					h("span", { className: "lcs-tcard-count" }, turn.count + " 个动作"),
-					h("span", { className: "lcs-tcard-open" }, "展开")
+					h("span", { className: "lcs-tcard-count" }, turn.count + T(" 个动作")),
+					h("span", { className: "lcs-tcard-open" }, T("展开"))
 				),
-				turn.intro ? h("div", { className: "lcs-tcard-row" }, h("b", null, "你说"), h("span", null, turn.intro)) : null,
-				turn.plan ? h("div", { className: "lcs-tcard-row" }, h("b", null, "计划"), h("span", null, turn.plan)) : null,
+				turn.intro ? h("div", { className: "lcs-tcard-row" }, h("b", null, T("你说")), h("span", null, turn.intro)) : null,
+				turn.plan ? h("div", { className: "lcs-tcard-row" }, h("b", null, T("计划")), h("span", null, turn.plan)) : null,
 				h(
 					"div",
 					{ className: "lcs-tcard-steps" },
@@ -1263,12 +1546,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						h(
 							"span",
 							{ key: item.kind + (item.card ? item.card.id : item.step), className: "lcs-chipx" + (item.kind === "group" ? " grp" : "") },
-							item.kind === "group" ? "步 " + (item.step ?? 0) + " · " + item.cards.length : (DISPLAY_KIND[item.card.kind] ?? "note")
+							item.kind === "group" ? T("步 ") + (item.step ?? 0) + " · " + item.cards.length : (DISPLAY_KIND[item.card.kind] ?? "note")
 						)
 					),
 					turn.items.length > 6 ? h("span", { className: "lcs-chipx" }, "+" + (turn.items.length - 6)) : null
 				),
-				turn.outro ? h("div", { className: "lcs-tcard-row out" }, h("b", null, "结果"), h("span", null, turn.outro)) : null
+				turn.outro ? h("div", { className: "lcs-tcard-row out" }, h("b", null, T("结果")), h("span", null, turn.outro)) : null
 			);
 		});
 
@@ -1318,7 +1601,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 			const ORDER = ["read-file", "write-file", "run-cmd", "web", "spawn-subagent", "tool"];
 			const parts = [...kinds.entries()]
 				.sort((a, b) => (ORDER.indexOf(a[0]) - ORDER.indexOf(b[0])) || b[1] - a[1])
-				.map(([kind, n]) => (DIGEST_LABEL[kind] ?? kind) + "×" + n);
+				.map(([kind, n]) => (T(DIGEST_LABEL[kind] ?? kind)) + "×" + n);
 			const top = [...tools.entries()].sort((a, b) => b[1] - a[1]).slice(0, 2).map(([name, n]) => short(name, 16) + (n > 1 ? "×" + n : ""));
 			return { tally: parts.join(" · "), tools: top.join("，") };
 		}
@@ -1332,15 +1615,15 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 				h(
 					"div",
 					{ className: "lcs-grow-head" },
-					h("span", { className: "lcs-grow-no" }, "步 " + (group.step ?? 0)),
-					h("span", { className: "lcs-grow-count" }, group.cards.length + " 个动作" + (mini.lanes > 1 ? " · 并行 " + mini.lanes + " 路" : "")),
-					h("span", { className: "lcs-grow-open" }, "展开")
+					h("span", { className: "lcs-grow-no" }, T("步 ") + (group.step ?? 0)),
+					h("span", { className: "lcs-grow-count" }, group.cards.length + T(" 个动作") + (mini.lanes > 1 ? T(" · 并行 ") + mini.lanes + T(" 路") : "")),
+					h("span", { className: "lcs-grow-open" }, T("展开"))
 				),
-				h("svg", { className: "lcs-mini-map", viewBox: "-6 -6 " + Math.max(1, mini.width + 12) + " " + Math.max(1, mini.height + 12), preserveAspectRatio: "xMidYMid meet", height: miniHeight, "aria-label": "组内节点及依赖预览" },
+				h("svg", { className: "lcs-mini-map", viewBox: "-6 -6 " + Math.max(1, mini.width + 12) + " " + Math.max(1, mini.height + 12), preserveAspectRatio: "xMidYMid meet", height: miniHeight, "aria-label": T("组内节点及依赖预览") },
 					mini.edges.map((edge) => h("path", { key: edge.key, d: edgePath(byKey(mini.rows, edge.a), byKey(mini.rows, edge.b)), fill: "none", stroke: "currentColor", strokeWidth: 2, opacity: .55 })),
 					mini.rows.map((row) => {
 						const first = row.item.kind === "group" ? row.item.cards[0] : row.item.card;
-						const label = first?.title || first?.sub || "未命名";
+						const label = first?.title || first?.sub || T("未命名");
 						return h("g", { key: row.key },
 							h("title", null, label),
 							h("rect", { x: row.x, y: row.y, width: row.w, height: row.h, rx: 7, className: "lcs-mini-node" + (row.item.kind === "group" ? " grp" : "") }),
@@ -1403,13 +1686,13 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					"div",
 					{ className: "lcs-win-head" },
 					h("span", { className: "lcs-win-title" }, frame.title),
-					h("span", { className: "lcs-win-sub" }, frame.detailCard ? "条目详情" : frame.items.length + " 项" + (chain.lanes > 1 ? " · 并行 " + chain.lanes + " 路" : " · 单链")),
-					h("button", { className: "lcs-win-btn", onClick: onClose, title: "返回上一级" }, "← 返回")
+					h("span", { className: "lcs-win-sub" }, frame.detailCard ? T("条目详情") : frame.items.length + T(" 项") + (chain.lanes > 1 ? T(" · 并行 ") + chain.lanes + T(" 路") : T(" · 单链"))),
+					h("button", { className: "lcs-win-btn", onClick: onClose, title: T("返回上一级") }, T("← 返回"))
 				),
 				h(
 					"div",
 					{ className: "lcs-win-body cv-scope", onPointerDown: (e) => { if (e.button !== 0 || e.target.closest(".lcs-win-cell, .lcs-detail")) return; panDragRef.current = { x: e.clientX, y: e.clientY, px: pan.x, py: pan.y }; e.currentTarget.setPointerCapture(e.pointerId); }, onPointerMove: (e) => { const d = panDragRef.current; if (d) setPan({ x: d.px + e.clientX - d.x, y: d.py + e.clientY - d.y }); }, onPointerUp: () => { panDragRef.current = null; }, onPointerCancel: () => { panDragRef.current = null; } },
-					frame.detailCard ? h("article", { className: "lcs-detail" }, h("div", { className: "lcs-detail-inner" }, h("h2", null, frame.detailCard.title), h("p", { className: "lcs-detail-meta" }, [frame.detailCard.kind, frame.detailCard.t ? new Date(frame.detailCard.t).toLocaleString() : null].filter(Boolean).join(" · ")), ...[["内容", frame.detailCard.text || frame.detailCard.sub], ["参数", frame.detailCard.detail], ["结果", frame.detailCard.result]].filter(([, value]) => value != null && value !== "").map(([label, value]) => h("section", { key: label }, h("h3", null, label), h("pre", null, typeof value === "string" ? value : JSON.stringify(value, null, 2)))))) : h(
+					frame.detailCard ? h("article", { className: "lcs-detail" }, h("div", { className: "lcs-detail-inner" }, h("h2", null, frame.detailCard.title), h("p", { className: "lcs-detail-meta" }, [frame.detailCard.kind, frame.detailCard.t ? new Date(frame.detailCard.t).toLocaleString() : null].filter(Boolean).join(" · ")), ...[[T("内容"), frame.detailCard.text || frame.detailCard.sub], [T("参数"), frame.detailCard.detail], [T("结果"), frame.detailCard.result]].filter(([, value]) => value != null && value !== "").map(([label, value]) => h("section", { key: label }, h("h3", null, label), h("pre", null, typeof value === "string" ? value : JSON.stringify(value, null, 2)))))) : h(
 						"div",
 						{ className: "lcs-win-chain", style: { width: chain.width + "px", height: chain.height + "px", transform: "translate(" + pan.x + "px," + pan.y + "px)" } },
 						h(
@@ -1426,7 +1709,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							h(
 								"div",
 								{ key: row.key, className: "lcs-win-cell", style: { left: position(row).x + "px", top: position(row).y + "px", width: row.w + "px", height: row.h + "px" } },
-								h("button", { className: "lcs-drag-handle", onPointerDown: (e) => { e.preventDefault(); startNodeDrag(e, row); }, title: "按住拖动卡片" }, "⠿  拖动"),
+								h("button", { className: "lcs-drag-handle", onPointerDown: (e) => { e.preventDefault(); startNodeDrag(e, row); }, title: T("按住拖动卡片") }, T("⠿  拖动")),
 								row.item.kind === "group"
 									? h(GroupRow, {
 											group: row.item,
@@ -1434,7 +1717,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 											onOpen: () =>
 												onPush({
 													id: frame.id + "/" + row.key,
-													title: frame.title + " · 步 " + (row.item.step ?? 0),
+													title: frame.title + T(" · 步 ") + (row.item.step ?? 0),
 														liveGroup: frame.liveGroup ? { ...frame.liveGroup, anchors: [...(frame.liveGroup.anchors || []), row.item.cards[0].id] } : undefined,
 													hue: frame.hue,
 													x: frame.x + 40,
@@ -1707,21 +1990,21 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 			};
 
 			if (sessionId === null || sessionId === undefined) {
-				return h("div", { className: "lcs-empty" }, "还没有活动会话。开一个对话，这里会实时长出卡片链。");
+				return h("div", { className: "lcs-empty" }, T("还没有活动会话。开一个对话，这里会实时长出卡片链。"));
 			}
 			if (world.nodes.length === 0) {
 				return h(
 					"div",
 					{ className: "lcs-empty" },
-					meta.error ? "取数失败：" + meta.error : "这个会话暂时没有卡片。",
+					meta.error ? T("取数失败：") + meta.error : T("这个会话暂时没有卡片。"),
 					h("br"),
 					h(
 						"button",
 						{ className: "lcs-btn", onClick: rebuildNow, style: { marginTop: "14px" } },
-						"从会话历史重建"
+						T("从会话历史重建")
 					),
 					h("br"),
-					h("span", { className: "lcs-note" }, "卡片由插件的规则引擎从 session/event 折叠，不经过模型；已有历史会被直接装回来，不用等新事件。")
+					h("span", { className: "lcs-note" }, T("卡片由插件的规则引擎从 session/event 折叠，不经过模型；已有历史会被直接装回来，不用等新事件。"))
 				);
 			}
 
@@ -1863,7 +2146,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 				setStack([
 					{
 						id: turn.id,
-						title: turn.title + " · " + turn.count + " 个动作",
+						title: turn.title + " · " + turn.count + T(" 个动作"),
 						hue: turn.hue,
 						liveGroup: { band: turn.turn, step: turn.item.step },
 						x: Math.round(base.x),
@@ -1973,7 +2256,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 									onPointerDown: (e) => onNodeDown(e, node)
 								},
 								node.turn?.item?.card?.kind === "msg-user"
-									? h("div", { className: "lcs-tstart" }, (node.chains?.first ? (chainNames[node.chains.index] ? "链 " + node.chains.index + " · " + chainNames[node.chains.index] : "任务链 " + node.chains.index) + " · " : "") + "第 " + (node.turn.turn ?? 0) + " 轮开始")
+									? h("div", { className: "lcs-tstart" }, (node.chains?.first ? (chainNames[node.chains.index] ? T("链 ") + node.chains.index + " · " + chainNames[node.chains.index] : T("任务链 ") + node.chains.index) + " · " : "") + "第 " + (node.turn.turn ?? 0) + T(" 轮开始"))
 									: null,
 								node.turn.item.kind === "group"
 									? h(GroupRow, { group: node.turn.item, hue: node.turn.hue, onOpen: () => { if (!suppressClickRef.current) openTurn(node.turn); } })
@@ -1992,8 +2275,8 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					),
 					h(
 						"button",
-						{ className: "lcs-tl-btn", "data-on": String(tlOpen), onClick: () => setTlOpen((v) => !v), title: "时间线与搜索" },
-						"时间线"
+						{ className: "lcs-tl-btn", "data-on": String(tlOpen), onClick: () => setTlOpen((v) => !v), title: T("时间线与搜索") },
+						T("时间线")
 					),
 					tlOpen
 						? h(
@@ -2001,7 +2284,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 								{ className: "lcs-tl" },
 								h("input", {
 									className: "lcs-tl-q",
-									placeholder: "搜关键字：命令 / 文件名 / 报错…",
+									placeholder: T("搜关键字：命令 / 文件名 / 报错…"),
 									value: q,
 									onChange: (e) => setQ(e.target.value)
 								}),
@@ -2009,12 +2292,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 									? h(
 											"div",
 											{ className: "lcs-tl-list" },
-											h("div", { className: "lcs-tl-head" }, "时间线"),
+											h("div", { className: "lcs-tl-head" }, T("时间线")),
 											turns.map((turn) =>
 												h(
 													"button",
 													{ key: turn.id, className: "lcs-tl-row", onPointerDown: () => jumpToTurn(turn) },
-													h("span", { className: "lcs-tl-time" }, "第 " + (turn.turn ?? 0) + " 轮"),
+													h("span", { className: "lcs-tl-time" }, T("第 ") + (turn.turn ?? 0) + T(" 轮")),
 													h("span", { className: "lcs-tl-main" }, short(turn.title, 34)),
 													h("span", { className: "lcs-tl-n" }, turn.count)
 												)
@@ -2023,14 +2306,14 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 									: h(
 											"div",
 											{ className: "lcs-tl-list" },
-											h("div", { className: "lcs-tl-head" }, "匹配 " + hits.length + " 条"),
+											h("div", { className: "lcs-tl-head" }, T("匹配 ") + hits.length + T(" 条")),
 											hits.length === 0
-												? h("div", { className: "lcs-note", style: { padding: "8px 10px" } }, "没有匹配的卡。")
+												? h("div", { className: "lcs-note", style: { padding: "8px 10px" } }, T("没有匹配的卡。"))
 												: hits.map((card) =>
 														h(
 															"button",
 															{ key: card.id, className: "lcs-tl-row", onPointerDown: () => jumpToCard(card) },
-															h("span", { className: "lcs-tl-time" }, "第 " + (card.band ?? 1) + " 轮"),
+															h("span", { className: "lcs-tl-time" }, T("第 ") + (card.band ?? 1) + T(" 轮")),
 															h("span", { className: "lcs-tl-main" }, short(card.title || card.sub || "", 34)),
 															h("span", { className: "lcs-tl-n" }, DISPLAY_KIND[card.kind] ?? "note")
 														)
@@ -2101,17 +2384,17 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						h("button", { className: "lcs-btn", onClick: () => zoomBy(1 / 1.25) }, "−"),
 						h("span", { className: "lcs-zoom-val" }, Math.round(view.k * 100) + "%"),
 						h("button", { className: "lcs-btn", onClick: () => zoomBy(1.25) }, "＋"),
-						h("button", { className: "lcs-btn", onClick: fit }, "自适应"),
+						h("button", { className: "lcs-btn", onClick: fit }, T("自适应")),
 						h("button", { className: "lcs-btn", onClick: () => { const v = { x: 48, y: 44, k: 1 }; paint(v); setView(v); } }, "1:1")
 					)
 				),
 				h(
 					"div",
 					{ className: "lcs-legend" },
-					h("span", null, "横向连线 = 骨干：轮次从左往右推进 · 点开进小画布"),
-					h("span", null, "一块颜色 = 一组，点开在画布里变成小画布"),
-					h("span", null, "拖拽平移 · 滚轮缩放 · 双击自适应"),
-					h("span", null, "共 " + meta.total + " 张卡 · " + turns.length + " 轮 · 画面上 " + visible.length + " 块")
+					h("span", null, T("横向连线 = 骨干：轮次从左往右推进 · 点开进小画布")),
+					h("span", null, T("一块颜色 = 一组，点开在画布里变成小画布")),
+					h("span", null, T("拖拽平移 · 滚轮缩放 · 双击自适应")),
+					h("span", null, T("共 ") + meta.total + T(" 张卡 · ") + turns.length + T(" 轮 · 画面上 ") + visible.length + T(" 块"))
 				)
 			);
 		}
@@ -2190,7 +2473,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							{ className: "cv-run-meta " + (state === "failed" ? "bad" : "ok") },
 							(state === "running" ? "running" : state === "failed" ? "exit ≠ 0" : "exit 0") + (card.sub ? " · " + card.sub : "")
 						),
-						h("pre", { className: state === "failed" ? "cv-run-stderr" : "cv-run-stdout" }, result || (state === "running" ? "…" : "（无输出）"))
+						h("pre", { className: state === "failed" ? "cv-run-stderr" : "cv-run-stdout" }, result || (state === "running" ? "…" : T("（无输出）")))
 					)
 				];
 			}
@@ -2207,13 +2490,13 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							h("i", { title: argText(card) }, argText(card))
 						)
 					),
-					h("div", { className: "cv-out", key: "out" }, result || (state === "running" ? "运行中…" : "（无回显）"))
+					h("div", { className: "cv-out", key: "out" }, result || (state === "running" ? T("运行中…") : T("（无回显）")))
 				];
 			}
 			if (dk === "sub") {
 				return [
 					h("div", { className: "cv-step-desc", key: "desc" }, card.sub || card.title),
-					h("div", { className: "cv-out", key: "out" }, result || "（还没回报）")
+					h("div", { className: "cv-out", key: "out" }, result || T("（还没回报）"))
 				];
 			}
 			if (dk === "plan") {
@@ -2224,7 +2507,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						"div",
 						{ className: "cv-steps", key: "steps" },
 						lines.length === 0
-							? h("div", { className: "cv-hint" }, "还没有步骤")
+							? h("div", { className: "cv-hint" }, T("还没有步骤"))
 							: lines.map((line, i) =>
 									h(
 										"div",
@@ -2253,7 +2536,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 			const state = card.state || "ok";
 			const dot = state === "running" ? "running" : state === "failed" ? "stopped" : "done";
 			// 跑程卡的标题原本是「跑 <命令>」，和卡里的 $ 命令行重复，改为用工具名当标题
-			const head = dk === "run" ? card.sub || "跑程" : card.title;
+			const head = dk === "run" ? card.sub || T("跑程") : card.title;
 			return h(
 				"div",
 				{ className: "cv-card" },
@@ -2269,9 +2552,9 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					? h(
 							"div",
 							{ className: "cv-run-hist" },
-							h("span", { className: "cv-run-past" }, "分支 " + ((card.lane ?? 0) + 1)),
-							h("span", { className: "cv-run-past" }, card.serial ? "串" : "并"),
-							h("span", null, "第 " + Math.max(1, card.band || 1) + " 轮 · 步 " + (card.step ?? 0)),
+							h("span", { className: "cv-run-past" }, T("分支 ") + ((card.lane ?? 0) + 1)),
+							h("span", { className: "cv-run-past" }, card.serial ? T("串") : T("并")),
+							h("span", null, T("第 ") + Math.max(1, card.band || 1) + T(" 轮 · 步 ") + (card.step ?? 0)),
 							h("span", null, fmtTime(card.time))
 						)
 					: null
@@ -2306,34 +2589,34 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 
 			const save = async () => {
 				const result = await api("/lc/memory/file", { path: current.path, content: draft });
-				setNotice({ ok: result.ok, text: result.ok ? "已保存 · 回读一致 " + result.readbackMatches + " · 备份 " + result.backup : "保存失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? T("已保存 · 回读一致 ") + result.readbackMatches + T(" · 备份 ") + result.backup : T("保存失败：") + result.reason });
 			};
 
 			const importSelected = async () => {
 				const items = ((data && data.live) || []).filter((item) => selected[item.id]);
-				if (items.length === 0) return setNotice({ ok: false, text: "先勾选要导入的条目" });
+				if (items.length === 0) return setNotice({ ok: false, text: T("先勾选要导入的条目") });
 				const result = await api("/lc/memory/import", { target, items: items.map((i) => ({ kind: i.kind, text: i.text })) });
-				setNotice({ ok: result.ok, text: result.ok ? "已追加 " + items.length + " 条 · 备份 " + result.backup : "追加失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? T("已追加 ") + items.length + T(" 条 · 备份 ") + result.backup : T("追加失败：") + result.reason });
 			};
 
 			const saveEdits = async () => {
 				const items = Object.entries(edits).map(([id, text]) => ({ id, text }));
-				if (items.length === 0) return setNotice({ ok: false, text: "没有改动" });
+				if (items.length === 0) return setNotice({ ok: false, text: T("没有改动") });
 				const result = await api("/lc/memory/items", { session: sessionId, items });
-				setNotice({ ok: result.ok, text: result.ok ? "已写入 " + result.items + " 条编辑覆盖" : "写入失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? T("已写入 ") + result.items + T(" 条编辑覆盖") : T("写入失败：") + result.reason });
 			};
 
-			if (error) return h("div", { className: "lcs-empty" }, "取数失败：" + error);
-			if (!data) return h("div", { className: "lcs-empty" }, "加载中…");
+			if (error) return h("div", { className: "lcs-empty" }, T("取数失败：") + error);
+			if (!data) return h("div", { className: "lcs-empty" }, T("加载中…"));
 
 			return h(
 				"div",
 				{ className: "lcs-scroll" },
 				memorySection === null ? h("div", { className: "lcs-grid" },
-					[["跨对话记忆", "磁盘上的记忆文件", cross.length], ["本次注入", "本会话观察到的注入内容", (data.imported || []).length], ["对话中的候选记忆", "从对话提取的候选，需自行确认", (data.live || []).length], ["子智能体记录", "实际观察到的调用和回报", (data.subagents || []).length]].map(([title, desc, count], i) =>
-						h("button", { key: title, className: "lcs-block", onClick: () => setMemorySection(i), style: { textAlign: "left", cursor: "pointer", padding: 20 } }, h("b", null, title), h("div", { className: "lcs-note", style: { marginTop: 8 } }, desc + " · " + count + " 项"))))
+					[[T("跨对话记忆"), T("磁盘上的记忆文件"), cross.length], [T("本次注入"), T("本会话观察到的注入内容"), (data.imported || []).length], [T("对话中的候选记忆"), T("从对话提取的候选，需自行确认"), (data.live || []).length], [T("子智能体记录"), T("实际观察到的调用和回报"), (data.subagents || []).length]].map(([title, desc, count], i) =>
+						h("button", { key: title, className: "lcs-block", onClick: () => setMemorySection(i), style: { textAlign: "left", cursor: "pointer", padding: 20 } }, h("b", null, title), h("div", { className: "lcs-note", style: { marginTop: 8 } }, desc + " · " + count + T(" 项")))))
 				: h("div", null,
-					h("button", { className: "lcs-btn", onClick: () => setMemorySection(null), style: { marginBottom: 12 } }, "← 返回记忆目录"),
+					h("button", { className: "lcs-btn", onClick: () => setMemorySection(null), style: { marginBottom: 12 } }, T("← 返回记忆目录")),
 				h(
 					"div",
 					{ className: "lcs-grid" },
@@ -2342,7 +2625,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					memorySection === 0 && h(
 						"section",
 						{ className: "lcs-block" },
-						h("div", { className: "lcs-block-head" }, h("b", null, "① 跨对话记忆"), h("em", null, "可直接编辑并保存，保存前自动备份")),
+						h("div", { className: "lcs-block-head" }, h("b", null, T("① 跨对话记忆")), h("em", null, T("可直接编辑并保存，保存前自动备份"))),
 						h(
 							"div",
 							{ className: "lcs-block-body" },
@@ -2352,10 +2635,10 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 								h(
 									"select",
 									{ className: "lcs-select lcs-grow", value: current ? current.id : "", onChange: (e) => setFileId(e.target.value) },
-									cross.map((file) => h("option", { key: file.id, value: file.id }, file.label + (file.exists ? "  (" + fmtSize(file.size) + ")" : "  (缺失)")))
+									cross.map((file) => h("option", { key: file.id, value: file.id }, file.label + (file.exists ? "  (" + fmtSize(file.size) + ")" : T("  (缺失)"))))
 								),
-								h("button", { className: "lcs-btn", onClick: () => { setDraft(current.content || ""); setDraftFor(current.path); } }, "还原"),
-								h("button", { className: "lcs-btn", "data-tone": "primary", onClick: save, disabled: !current }, "保存")
+								h("button", { className: "lcs-btn", onClick: () => { setDraft(current.content || ""); setDraftFor(current.path); } }, T("还原")),
+								h("button", { className: "lcs-btn", "data-tone": "primary", onClick: save, disabled: !current }, T("保存"))
 							),
 							current ? h("div", { className: "lcs-mono" }, current.path) : null,
 							h("textarea", { className: "lcs-textarea", value: draft, onChange: (e) => setDraft(e.target.value), spellCheck: false }),
@@ -2367,12 +2650,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					memorySection === 1 && h(
 						"section",
 						{ className: "lcs-block" },
-						h("div", { className: "lcs-block-head" }, h("b", null, "② 本次对话导入的跨对话记忆"), h("em", null, "本会话启动时被注入的内容，只读快照")),
+						h("div", { className: "lcs-block-head" }, h("b", null, T("② 本次对话导入的跨对话记忆")), h("em", null, T("本会话启动时被注入的内容，只读快照"))),
 						h(
 							"div",
 							{ className: "lcs-block-body" },
 							(data.imported || []).length === 0
-								? h("div", { className: "lcs-note" }, "本会话没有观察到 system/developer 注入事件（可能早于插件启动）。")
+								? h("div", { className: "lcs-note" }, T("本会话没有观察到 system/developer 注入事件（可能早于插件启动）。"))
 								: (data.imported || []).map((item) =>
 										h(
 											"div",
@@ -2380,7 +2663,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 											h(
 												"div",
 												{ className: "lcs-item-text" },
-												h("div", { className: "lcs-row" }, h("span", { className: "lcs-tag" }, item.source), h("span", { className: "lcs-note" }, fmtTime(item.time) + " · " + item.chars + " 字" + (item.truncated ? "（已截断）" : ""))),
+												h("div", { className: "lcs-row" }, h("span", { className: "lcs-tag" }, item.source), h("span", { className: "lcs-note" }, fmtTime(item.time) + " · " + item.chars + T(" 字") + (item.truncated ? T("（已截断）") : ""))),
 												h("div", { className: "lcs-mono", style: { marginTop: 4, whiteSpace: "pre-wrap", maxHeight: 140, overflow: "auto" } }, item.text)
 											)
 										)
@@ -2392,12 +2675,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					memorySection === 2 && h(
 						"section",
 						{ className: "lcs-block" },
-						h("div", { className: "lcs-block-head" }, h("b", null, "③ 对话中的记忆"), h("em", null, "规则引擎从事件里抽取，可改、可勾选后导入 ①")),
+						h("div", { className: "lcs-block-head" }, h("b", null, T("③ 对话中的记忆")), h("em", null, T("规则引擎从事件里抽取，可改、可勾选后导入 ①"))),
 						h(
 							"div",
 							{ className: "lcs-block-body" },
 							(data.live || []).length === 0
-								? h("div", { className: "lcs-note" }, "本会话还没抽到偏好/约束/决定。规则只认明确句式，宁缺不猜。")
+								? h("div", { className: "lcs-note" }, T("本会话还没抽到偏好/约束/决定。规则只认明确句式，宁缺不猜。"))
 								: h(
 										"div",
 										{ className: "lcs-list" },
@@ -2413,7 +2696,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 												h(
 													"div",
 													{ className: "lcs-item-text" },
-													h("div", { className: "lcs-row" }, h("span", { className: "lcs-tag", "data-kind": item.kind }, item.label), h("span", { className: "lcs-note" }, (item.from === "user" ? "用户" : "助手") + " · " + fmtTime(item.time) + (item.edited ? " · 已编辑" : ""))),
+													h("div", { className: "lcs-row" }, h("span", { className: "lcs-tag", "data-kind": item.kind }, item.label), h("span", { className: "lcs-note" }, (item.from === "user" ? T("用户") : T("助手")) + " · " + fmtTime(item.time) + (item.edited ? T(" · 已编辑") : ""))),
 													h("textarea", {
 														className: "lcs-textarea",
 														style: { minHeight: 46, marginTop: 4 },
@@ -2430,10 +2713,10 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 								h(
 									"select",
 									{ className: "lcs-select lcs-grow", value: target, onChange: (e) => setTarget(e.target.value) },
-									cross.map((file) => h("option", { key: file.id, value: file.path }, "追加到：" + file.label))
+									cross.map((file) => h("option", { key: file.id, value: file.path }, T("追加到：") + file.label))
 								),
-								h("button", { className: "lcs-btn", onClick: saveEdits }, "保存本条编辑"),
-								h("button", { className: "lcs-btn", "data-tone": "primary", onClick: importSelected }, "导入到跨对话记忆")
+								h("button", { className: "lcs-btn", onClick: saveEdits }, T("保存本条编辑")),
+								h("button", { className: "lcs-btn", "data-tone": "primary", onClick: importSelected }, T("导入到跨对话记忆"))
 							)
 						)
 					),
@@ -2442,12 +2725,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					memorySection === 3 && h(
 						"section",
 						{ className: "lcs-block" },
-						h("div", { className: "lcs-block-head" }, h("b", null, "④ 子智能体记录"), h("em", null, "观察到的子智能体调用参数和回报，并非子体全部记忆")),
+						h("div", { className: "lcs-block-head" }, h("b", null, T("④ 子智能体记录")), h("em", null, T("观察到的子智能体调用参数和回报，并非子体全部记忆"))),
 						h(
 							"div",
 							{ className: "lcs-block-body" },
 							(data.subagents || []).length === 0
-								? h("div", { className: "lcs-note" }, "尚未观察到子智能体调用；插件启动前的记录可能未载入。")
+								? h("div", { className: "lcs-note" }, T("尚未观察到子智能体调用；插件启动前的记录可能未载入。"))
 								: (data.subagents || []).map((sub) =>
 										h(
 											"div",
@@ -2455,16 +2738,16 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 											h(
 												"div",
 												{ className: "lcs-item-text" },
-												h("div", { className: "lcs-row" }, h("b", null, sub.name || sub.id), h("span", { className: "lcs-note" }, fmtTime(sub.startedAt) + (sub.endedAt ? " → " + fmtTime(sub.endedAt) : " → 进行中"))),
-												h("div", { className: "lcs-note", style: { marginTop: 3 } }, "任务：" + (sub.task || "—")),
-												h("div", { className: "lcs-note" }, "回报：" + (sub.result || "—"))
+												h("div", { className: "lcs-row" }, h("b", null, sub.name || sub.id), h("span", { className: "lcs-note" }, fmtTime(sub.startedAt) + (sub.endedAt ? " → " + fmtTime(sub.endedAt) : T(" → 进行中")))),
+												h("div", { className: "lcs-note", style: { marginTop: 3 } }, T("任务：") + (sub.task || "—")),
+												h("div", { className: "lcs-note" }, T("回报：") + (sub.result || "—"))
 											)
 										)
 									)
 						)
 					),
 
-					h("div", { className: "lcs-note" }, "文件来源：" + (data.files || []).map((f) => f.path).join("  ·  "))
+					h("div", { className: "lcs-note" }, T("文件来源：") + (data.files || []).map((f) => f.path).join("  ·  "))
 				))
 			);
 		}
@@ -2491,26 +2774,26 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 
 			const toggle = async (kind, id, enabled) => {
 				const result = await api("/lc/calls/plugin", { kind, id, enabled, confirm: true });
-				setNotice({ ok: result.ok && result.verified !== false, text: result.ok ? (result.verified ? "已切换并回读确认：" + id + " → " + result.readback.enabled : "接口接受但回读不一致：" + JSON.stringify(result.readback)) : "失败：" + result.reason });
+				setNotice({ ok: result.ok && result.verified !== false, text: result.ok ? (result.verified ? T("已切换并回读确认：") + id + " → " + result.readback.enabled : T("接口接受但回读不一致：") + JSON.stringify(result.readback)) : T("失败：") + result.reason });
 				setReloadKey((n) => n + 1);
 			};
 			const toggleTool = async (name, enabled) => {
 				const result = await api("/lc/calls/tool", { action: "toggle", name, enabled, confirm: true });
-				setNotice({ ok: result.ok, text: result.ok ? "已切换并回读：" + JSON.stringify(result.readback) : "失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? T("已切换并回读：") + JSON.stringify(result.readback) : T("失败：") + result.reason });
 				setReloadKey((n) => n + 1);
 			};
 			const removeTool = async (name) => {
-				if (!window.confirm("删除 cap/tool 条目「" + name + "」？会先备份再移走。")) return;
+				if (!window.confirm(T("删除 cap/tool 条目「") + name + T("」？会先备份再移走。"))) return;
 				const result = await api("/lc/calls/tool", { action: "delete", name, confirm: true });
-				setNotice({ ok: result.ok, text: result.ok ? "已删除（备份 " + result.backup + "）" : "失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? T("已删除（备份 ") + result.backup + "）" : T("失败：") + result.reason });
 				setReloadKey((n) => n + 1);
 			};
 			const addTool = async () => {
-				const name = window.prompt("新 cap/tool 条目名（不含路径）：");
+				const name = window.prompt(T("新 cap/tool 条目名（不含路径）："));
 				if (!name) return;
-				const body = window.prompt("内容（可留空）：", "# " + name + "\n");
+				const body = window.prompt(T("内容（可留空）："), "# " + name + "\n");
 				const result = await api("/lc/calls/tool", { action: "add", name, body: body ?? "" });
-				setNotice({ ok: result.ok, text: result.ok ? "已创建 " + result.path : "失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? T("已创建 ") + result.path : T("失败：") + result.reason });
 				setReloadKey((n) => n + 1);
 			};
 			/* Drag-out needs a real File on the dataTransfer, so the bytes are fetched as
@@ -2537,17 +2820,17 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						dragFiles.current.delete(row.path);
 					});
 			};
-			const registerProgram = async () => {				const path = window.prompt("登记一个可执行文件的完整路径：");
+			const registerProgram = async () => {				const path = window.prompt(T("登记一个可执行文件的完整路径："));
 				if (!path) return;
-				const name = window.prompt("显示名：", path.split(/[\\\\/]/).pop() || "");
+				const name = window.prompt(T("显示名："), path.split(/[\\\\/]/).pop() || "");
 				const result = await api("/lc/calls/program", { id: name || path, name: name || path, path });
-				setNotice({ ok: result.ok, text: result.ok ? "已登记：" + JSON.stringify(result.readback) : "失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? T("已登记：") + JSON.stringify(result.readback) : T("失败：") + result.reason });
 				setReloadKey((n) => n + 1);
 			};
 
 			const view = reloadKey > 0 && fresh.data ? fresh.data : data;
-			if (error) return h("div", { className: "lcs-empty" }, "取数失败：" + error);
-			if (!view) return h("div", { className: "lcs-empty" }, "加载中…");
+			if (error) return h("div", { className: "lcs-empty" }, T("取数失败：") + error);
+			if (!view) return h("div", { className: "lcs-empty" }, T("加载中…"));
 
 			const skills = view.skills || { available: false, rows: [] };
 			const plugins = view.plugins || { available: false, plugins: [], bundles: [] };
@@ -2569,9 +2852,9 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 				h(
 					"div",
 					{ className: "lcs-calls-bar" },
-					h("button", { className: "lcs-btn", "data-on": String(callsMode === "used"), onClick: () => setCallsMode("used") }, "本对话使用 " + usedRows.length),
-					h("button", { className: "lcs-btn", "data-on": String(callsMode === "lib"), onClick: () => setCallsMode("lib") }, "全部库 " + (pluginAll.length + skillAll.length + progAll.length)),
-					h("span", { className: "lcs-note" }, callsMode === "used" ? "只统计这个会话的卡片（读/写/跑/联网/子体/工具），按次数排序" : "上：插件与 bundle　下左：skills　下右：可执行程序；每块各自搜索、各自滚动")
+					h("button", { className: "lcs-btn", "data-on": String(callsMode === "used"), onClick: () => setCallsMode("used") }, T("本对话使用 ") + usedRows.length),
+					h("button", { className: "lcs-btn", "data-on": String(callsMode === "lib"), onClick: () => setCallsMode("lib") }, T("全部库 ") + (pluginAll.length + skillAll.length + progAll.length)),
+					h("span", { className: "lcs-note" }, callsMode === "used" ? T("只统计这个会话的卡片（读/写/跑/联网/子体/工具），按次数排序") : T("上：插件与 bundle　下左：skills　下右：可执行程序；每块各自搜索、各自滚动"))
 				),
 				notice ? h("div", { className: notice.ok ? "lcs-note lcs-ok" : "lcs-note lcs-bad" }, notice.text) : null,
 				h(
@@ -2582,12 +2865,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						? h(
 								"section",
 								{ className: "lcs-block" },
-								h("div", { className: "lcs-block-head" }, h("b", null, "本对话用过的调用"), h("em", null, usedRows.length + " 类")),
+								h("div", { className: "lcs-block-head" }, h("b", null, T("本对话用过的调用")), h("em", null, usedRows.length + T(" 类"))),
 								h(
 									"div",
 									{ className: "lcs-block-body" },
 									usedRows.length === 0
-										? h("div", { className: "lcs-note" }, "这个会话还没有可统计的调用。")
+										? h("div", { className: "lcs-note" }, T("这个会话还没有可统计的调用。"))
 										: h(
 												"div",
 												{ className: "lcs-list" },
@@ -2596,7 +2879,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 														"div",
 														{ key: row.kind + "·" + row.name, className: "lcs-item" },
 														h("span", { className: "lcs-tag" }, row.kind),
-														h("div", { className: "lcs-item-text" }, h("b", null, row.name), h("div", { className: "lcs-note" }, "最后出现：第 " + row.lastBand + " 轮")),
+														h("div", { className: "lcs-item-text" }, h("b", null, row.name), h("div", { className: "lcs-note" }, T("最后出现：第 ") + row.lastBand + T(" 轮"))),
 														h("span", { className: "lcs-pill", "data-on": "true" }, "×" + row.count)
 													)
 												)
@@ -2612,11 +2895,11 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							"div",
 							{ className: "lcs-block-head" },
 							h("b", null, "skills"),
-							h("em", null, skillAll.length + " 个 · Harness skill 注册表" + (skills.available ? "" : "（服务不可用）")),
+							h("em", null, skillAll.length + T(" 个 · Harness skill 注册表") + (skills.available ? "" : T("（服务不可用）"))),
 							h("input", {
 								className: "lcs-input",
 								style: { marginLeft: "auto", width: "140px", flex: "0 0 auto" },
-								placeholder: "搜索 skill",
+								placeholder: T("搜索 skill"),
 								value: skillQuery,
 								onChange: (e) => setSkillQuery(e.target.value)
 							})
@@ -2625,9 +2908,9 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							"div",
 							{ className: "lcs-block-body" },
 							(skills.rows || []).length === 0
-								? h("div", { className: "lcs-note" }, skills.error || "没有读出 skill。")
+								? h("div", { className: "lcs-note" }, skills.error || T("没有读出 skill。"))
 								: skillAll.length === 0
-									? h("div", { className: "lcs-note" }, "没有匹配「" + skillQuery + "」的 skill。")
+									? h("div", { className: "lcs-note" }, T("没有匹配「") + skillQuery + T("」的 skill。"))
 									: h(
 										"div",
 										{ className: "lcs-list" },
@@ -2635,7 +2918,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 											h(
 												"div",
 												{ key: row.id, className: "lcs-item" },
-												h("span", { className: "lcs-pill", "data-on": "true" }, "启用"),
+												h("span", { className: "lcs-pill", "data-on": "true" }, T("启用")),
 												h("div", { className: "lcs-item-text" }, h("b", null, row.name), h("div", { className: "lcs-note" }, row.description || row.path || "")),
 												h("span", { className: "lcs-tag" }, row.source || "skills")
 											)
@@ -2650,12 +2933,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						h(
 							"div",
 							{ className: "lcs-block-head" },
-							h("b", null, "插件与 bundle"),
-							h("em", null, pluginAll.length + " 个 · 启停走 dsh 的插件管理器"),
+							h("b", null, T("插件与 bundle")),
+							h("em", null, pluginAll.length + T(" 个 · 启停走 dsh 的插件管理器")),
 							h("input", {
 								className: "lcs-input",
 								style: { marginLeft: "auto", width: "180px" },
-								placeholder: "搜索插件",
+								placeholder: T("搜索插件"),
 								value: pluginQuery,
 								onChange: (e) => setPluginQuery(e.target.value)
 							})
@@ -2670,7 +2953,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 									h(
 										"div",
 										{ key: "p-" + row.id, className: "lcs-item" },
-										h("span", { className: "lcs-pill", "data-on": String(row.enabled) }, row.enabled ? "启用" : "停用"),
+										h("span", { className: "lcs-pill", "data-on": String(row.enabled) }, row.enabled ? T("启用") : T("停用")),
 										h(
 											"div",
 											{ className: "lcs-item-text" },
@@ -2678,8 +2961,8 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 											h("div", { className: "lcs-note" }, (row.version || "") + " · " + (row.source || "plugin") + " · " + (row.entryId || row.id))
 										),
 										row.readOnlyReason
-											? h("span", { className: "lcs-tag", title: "不由插件管理器直接管理" }, "只读：" + row.readOnlyReason)
-											: h("button", { className: "lcs-btn", onClick: () => toggle("plugin", row.id, !row.enabled) }, row.enabled ? "停用" : "启用")
+											? h("span", { className: "lcs-tag", title: T("不由插件管理器直接管理") }, T("只读：") + row.readOnlyReason)
+											: h("button", { className: "lcs-btn", onClick: () => toggle("plugin", row.id, !row.enabled) }, row.enabled ? T("停用") : T("启用"))
 									)
 								)
 							),
@@ -2691,32 +2974,32 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 									h(
 										"div",
 										{ key: "b-" + row.name, className: "lcs-item" },
-										h("span", { className: "lcs-pill", "data-on": String(row.enabled) }, row.enabled ? "启用" : "停用"),
+										h("span", { className: "lcs-pill", "data-on": String(row.enabled) }, row.enabled ? T("启用") : T("停用")),
 										h("div", { className: "lcs-item-text" }, h("b", null, row.name), h("div", { className: "lcs-note" }, "bundle · " + row.version)),
-										h("button", { className: "lcs-btn", onClick: () => toggle("bundle", row.name, !row.enabled) }, row.enabled ? "停用" : "启用")
+										h("button", { className: "lcs-btn", onClick: () => toggle("bundle", row.name, !row.enabled) }, row.enabled ? T("停用") : T("启用"))
 									)
 								)
 							),
 							pluginAll.length > pluginLimit
-								? h("button", { className: "lcs-btn", style: { alignSelf: "flex-start" }, onClick: () => setPluginLimit((n) => n + 20) }, "显示更多（还有 " + (pluginAll.length - pluginLimit) + " 个）")
+								? h("button", { className: "lcs-btn", style: { alignSelf: "flex-start" }, onClick: () => setPluginLimit((n) => n + 20) }, T("显示更多（还有 ") + (pluginAll.length - pluginLimit) + T(" 个）"))
 								: null,
 							h("div", { className: "lcs-sep" }),
 							h(
 								"div",
 								{ className: "lcs-calls-sub" },
-								h("b", null, "cap/tool 说明条目"),
-								h("em", null, wsAll.length + " 条 · 工作区 <WS>/cap/tool 下的工具说明，不是可执行文件"),
+								h("b", null, T("cap/tool 说明条目")),
+								h("em", null, wsAll.length + T(" 条 · 工作区 <WS>/cap/tool 下的工具说明，不是可执行文件")),
 								h("input", {
 									className: "lcs-input",
 									style: { marginLeft: "auto", width: "150px", flex: "0 0 auto" },
-									placeholder: "搜索工具条目",
+									placeholder: T("搜索工具条目"),
 									value: toolQuery,
 									onChange: (e) => setToolQuery(e.target.value)
 								}),
-								h("button", { className: "lcs-btn", onClick: addTool }, "新增")
+								h("button", { className: "lcs-btn", onClick: addTool }, T("新增"))
 							),
 							(wsTools.rows || []).length === 0
-								? h("div", { className: "lcs-note" }, "cap/tool 为空或不存在。")
+								? h("div", { className: "lcs-note" }, T("cap/tool 为空或不存在。"))
 								: h(
 										"div",
 										{ className: "lcs-list" },
@@ -2724,10 +3007,10 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 											h(
 												"div",
 												{ key: row.id, className: "lcs-item" },
-												h("span", { className: "lcs-pill", "data-on": String(!row.disabled) }, row.disabled ? "已停用" : "启用"),
+												h("span", { className: "lcs-pill", "data-on": String(!row.disabled) }, row.disabled ? T("已停用") : T("启用")),
 												h("div", { className: "lcs-item-text" }, h("b", null, row.name), h("div", { className: "lcs-note" }, row.summary || fmtSize(row.size))),
-												h("button", { className: "lcs-btn", onClick: () => toggleTool(row.name, row.disabled) }, row.disabled ? "启用" : "停用"),
-												h("button", { className: "lcs-btn", "data-tone": "danger", onClick: () => removeTool(row.name) }, "删除")
+												h("button", { className: "lcs-btn", onClick: () => toggleTool(row.name, row.disabled) }, row.disabled ? T("启用") : T("停用")),
+												h("button", { className: "lcs-btn", "data-tone": "danger", onClick: () => removeTool(row.name) }, T("删除"))
 											)
 										)
 									)
@@ -2740,16 +3023,16 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						h(
 							"div",
 							{ className: "lcs-block-head" },
-							h("b", null, "可执行程序"),
-							h("em", null, "PATH 扫描 " + (programs.total ?? 0) + " 个，当前显示 " + shownPrograms.length + " 个 · 拖到对话输入框可导入"),
+							h("b", null, T("可执行程序")),
+							h("em", null, T("PATH 扫描 ") + (programs.total ?? 0) + T(" 个，当前显示 ") + shownPrograms.length + T(" 个 · 拖到对话输入框可导入")),
 							h("input", {
 								className: "lcs-input",
 								style: { marginLeft: "auto", width: "180px" },
-								placeholder: "过滤程序名或路径",
+								placeholder: T("过滤程序名或路径"),
 								value: progQuery,
 								onChange: (e) => setProgQuery(e.target.value)
 							}),
-							h("button", { className: "lcs-btn", onClick: registerProgram }, "登记程序")
+							h("button", { className: "lcs-btn", onClick: registerProgram }, T("登记程序"))
 						),
 						h(
 							"div",
@@ -2764,7 +3047,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 											key: row.id + row.path,
 											className: "lcs-item",
 											draggable: true,
-											title: "按住后拖到 DSH 对话输入框即可作为文件导入；单击复制路径",
+											title: T("按住后拖到 DSH 对话输入框即可作为文件导入；单击复制路径"),
 											onPointerDown: () => prefetchProgram(row),
 											onDragStart: (ev) => {
 												const file = dragFiles.current.get(row.path);
@@ -2776,20 +3059,20 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 														ev.dataTransfer.setData("text/plain", row.path);
 														return;
 													} catch (err) {
-														setNotice({ ok: false, text: "构造拖拽负载失败：" + String(err) });
+														setNotice({ ok: false, text: T("构造拖拽负载失败：") + String(err) });
 													}
 												}
 												const url = "file:///" + String(row.path).replace(/\\/g, "/");
 												ev.dataTransfer.setData("text/uri-list", url);
 												ev.dataTransfer.setData("text/plain", row.path);
-												setNotice({ ok: false, text: "文件还没读完，松手后重拖一次（约半秒），或单击复制路径" });
+												setNotice({ ok: false, text: T("文件还没读完，松手后重拖一次（约半秒），或单击复制路径") });
 											},
 											onClick: async () => {
 												try {
 													await navigator.clipboard.writeText(row.path);
-													setNotice({ ok: true, text: "已复制路径：" + row.path });
+													setNotice({ ok: true, text: T("已复制路径：") + row.path });
 												} catch (err) {
-													setNotice({ ok: false, text: "复制失败：" + String(err) });
+													setNotice({ ok: false, text: T("复制失败：") + String(err) });
 												}
 											}
 										},
@@ -2799,7 +3082,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 								)
 							),
 							progAll.length > progLimit
-								? h("button", { className: "lcs-btn", style: { alignSelf: "flex-start" }, onClick: () => setProgLimit((n) => n + 20) }, "显示更多（还有 " + (progAll.length - progLimit) + " 个）")
+								? h("button", { className: "lcs-btn", style: { alignSelf: "flex-start" }, onClick: () => setProgLimit((n) => n + 20) }, T("显示更多（还有 ") + (progAll.length - progLimit) + T(" 个）"))
 								: null
 						)
 					)
@@ -2822,48 +3105,48 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 			const [notice, setNotice] = useState(undefined);
 			const { data: turnData } = useJson("/lc/outputs/turns?session=" + encodeURIComponent(sessionId || ""), 15000);
 			const { data: preData } = useJson("/lc/outputs/preimages?session=" + encodeURIComponent(sessionId || ""), 15000);
-			const { data: finalData } = useJson("/lc/outputs/final?session=" + encodeURIComponent(sessionId || ""), 15000);
+			const { data: finalData } = useJson("/lc/outputs/final?session=" + encodeURIComponent(sessionId || "") + "&lang=" + LANG, 15000);
 
 			const rows = data ? (data.rows || []).filter((row) => row.category === category && (fileType === "全部类型" || row.type === fileType)) : [];
 
 			const open = async (row, mode) => {
 				const result = await api("/lc/outputs/open", { path: row.path, mode });
-				setNotice({ ok: result.ok, text: result.ok ? (mode === "select" ? "已在资源管理器定位" : "已交给系统程序打开") : "失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? (mode === "select" ? T("已在资源管理器定位") : T("已交给系统程序打开")) : T("失败：") + result.reason });
 			};
 			const read = async (row) => {
 				const result = await api("/lc/file?path=" + encodeURIComponent(row.path));
-				if (!result.ok) return setNotice({ ok: false, text: "读取失败：" + result.reason });
+				if (!result.ok) return setNotice({ ok: false, text: T("读取失败：") + result.reason });
 				setViewer({ ...result, row });
 			};
 			const retire = async (row) => {
-				if (!window.confirm("把这行移出产出目录？会先备份。\n" + row.path)) return;
+				if (!window.confirm(T("把这行移出产出目录？会先备份。\n") + row.path)) return;
 				const result = await api("/lc/outputs/retire", { path: row.path, confirm: true });
-				setNotice({ ok: result.ok, text: result.ok ? "已移走（回读：" + result.readback + "）" : "失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? T("已移走（回读：") + result.readback + "）" : T("失败：") + result.reason });
 			};
 			const previewClean = async (paths) => {
 				const result = await api("/lc/outputs/retire-many", { paths, preview: true });
-				if (!result.ok) return setNotice({ ok: false, text: "预览失败：" + result.reason });
+				if (!result.ok) return setNotice({ ok: false, text: T("预览失败：") + result.reason });
 				setPreview(result);
 				setNotice(undefined);
 			};
 			const runClean = async () => {
 				if (!preview) return;
-				if (!window.confirm("清理 " + preview.count + " 个文件（合计 " + fmtSize(preview.totalBytes) + "）？会先备份再改名，不会直接删除。")) return;
+				if (!window.confirm(T("清理 ") + preview.count + T(" 个文件（合计 ") + fmtSize(preview.totalBytes) + T("）？会先备份再改名，不会直接删除。"))) return;
 				const result = await api("/lc/outputs/retire-many", { paths: preview.rows.map((row) => row.path), confirm: true });
 				setPreview(undefined);
 				setPicked(new Set());
-				setNotice({ ok: result.ok, text: "清理完成：移走 " + result.moved + " / " + result.count + " 个，合计 " + fmtSize(result.totalBytes) + (result.results ? "；失败 " + result.results.filter((r) => !r.ok).length + " 个" : "") });
+				setNotice({ ok: result.ok, text: T("清理完成：移走 ") + result.moved + " / " + result.count + T(" 个，合计 ") + fmtSize(result.totalBytes) + (result.results ? T("；失败 ") + result.results.filter((r) => !r.ok).length + T(" 个") : "") });
 			};
 			const lookBackups = async (row) => {
 				const result = await api("/lc/outputs/backups?path=" + encodeURIComponent(row.path));
-				if (!result.ok) return setNotice({ ok: false, text: "查询失败：" + result.reason });
+				if (!result.ok) return setNotice({ ok: false, text: T("查询失败：") + result.reason });
 				setBackups({ path: row.path, rows: result.backups });
-				setNotice({ ok: true, text: result.backups.length === 0 ? "这个文件没有本插件的备份，无法回滚。" : "找到 " + result.backups.length + " 个备份，最新一个是 " + fmtTime(result.backups[0].mtime) });
+				setNotice({ ok: true, text: result.backups.length === 0 ? T("这个文件没有本插件的备份，无法回滚。") : T("找到 ") + result.backups.length + T(" 个备份，最新一个是 ") + fmtTime(result.backups[0].mtime) });
 			};
 			const doRestore = async (row, backup) => {
-				if (!window.confirm("用这个备份覆盖当前文件？\n备份：" + backup + "\n当前：" + row.path)) return;
+				if (!window.confirm(T("用这个备份覆盖当前文件？\n备份：") + backup + T("\n当前：") + row.path)) return;
 				const result = await api("/lc/outputs/restore", { path: row.path, backup, confirm: true });
-				setNotice({ ok: result.ok, text: result.ok ? "已恢复并回读校验：" + result.readback : "恢复失败：" + result.reason });
+				setNotice({ ok: result.ok, text: result.ok ? T("已恢复并回读校验：") + result.readback : T("恢复失败：") + result.reason });
 				setBackups(undefined);
 			};
 
@@ -2873,12 +3156,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					return h(
 						"section",
 						{ className: "lcs-final", "data-state": "idle" },
-						h("div", { className: "lcs-final-side" }, h("b", null, "最终产出")),
+						h("div", { className: "lcs-final-side" }, h("b", null, T("最终产出"))),
 						h(
 							"div",
 							{ className: "lcs-final-main" },
-							h("div", { className: "lcs-final-head" }, h("b", null, "还没有结束标记")),
-							h("div", { className: "lcs-note" }, "在对话里单独发一条「发送」「结束」或 /end，这一段写完的文件会汇总到最上面这里。")
+							h("div", { className: "lcs-final-head" }, h("b", null, T("还没有结束标记"))),
+							h("div", { className: "lcs-note" }, T("在对话里单独发一条「发送」「结束」或 /end，这一段写完的文件会汇总到最上面这里。"))
 						)
 					);
 				}
@@ -2886,14 +3169,14 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 				return h(
 					"section",
 					{ className: "lcs-final", "data-state": "done" },
-					h("div", { className: "lcs-final-side" }, h("b", null, "最终产出")),
+					h("div", { className: "lcs-final-side" }, h("b", null, T("最终产出"))),
 					h(
 						"div",
 						{ className: "lcs-final-main" },
 						finalData.summary ? h("p", { className: "lcs-final-summary" }, finalData.summary) : null,
-						finalData.summaryPending ? h("div", { className: "lcs-note" }, "正在把整段对话归纳成一句话…") : null,
+						finalData.summaryPending ? h("div", { className: "lcs-note" }, T("正在把整段对话归纳成一句话…")) : null,
 						finalData.count === 0
-							? h("div", { className: "lcs-note" }, "这一段没有观察到写文件。")
+							? h("div", { className: "lcs-note" }, T("这一段没有观察到写文件。"))
 							: h(
 									"div",
 									{ className: "lcs-final-list" },
@@ -2902,11 +3185,11 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 											"div",
 											{ key: row.path, className: "lcs-final-row" },
 											h("b", null, row.name),
-											h("span", { className: "lcs-note" }, row.exists ? fmtSize(row.size) + " · " + relTime(row.mtime) : "文件已不存在"),
+											h("span", { className: "lcs-note" }, row.exists ? fmtSize(row.size) + " · " + relTime(row.mtime) : T("文件已不存在")),
 											h("span", { className: "lcs-mono lcs-grow" }, row.path),
-											h("button", { className: "lcs-btn", onClick: () => open(row, "select") }, "定位"),
-											h("button", { className: "lcs-btn", onClick: () => read({ ...row, name: row.name, mtime: row.mtime }) }, "阅读"),
-											h("button", { className: "lcs-btn", onClick: () => open(row, "open") }, "打开")
+											h("button", { className: "lcs-btn", onClick: () => open(row, "select") }, T("定位")),
+											h("button", { className: "lcs-btn", onClick: () => read({ ...row, name: row.name, mtime: row.mtime }) }, T("阅读")),
+											h("button", { className: "lcs-btn", onClick: () => open(row, "open") }, T("打开"))
 										)
 									)
 								)
@@ -2914,8 +3197,8 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 				);
 			};
 
-			if (error) return h("div", { className: "lcs-empty" }, "取数失败：" + error);
-			if (!data) return h("div", { className: "lcs-empty" }, "扫描中…");
+			if (error) return h("div", { className: "lcs-empty" }, T("取数失败：") + error);
+			if (!data) return h("div", { className: "lcs-empty" }, T("扫描中…"));
 
 			return h(
 				"div",
@@ -2924,7 +3207,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 					"div",
 					{ className: "lcs-grid" },
 					finalBlock(),
-					h("div", { className: "lcs-note" }, "这些是限定目录中的扫描结果，并非全部经过确认的产出；写入记录覆盖插件观察到的会话事件，备份文件也不等于可回滚版本。"),
+					h("div", { className: "lcs-note" }, T("这些是限定目录中的扫描结果，并非全部经过确认的产出；写入记录覆盖插件观察到的会话事件，备份文件也不等于可回滚版本。")),
 					h(
 						"div",
 						{ className: "lcs-row" },
@@ -2932,20 +3215,20 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							h(
 								"button",
 								{ key, className: "lcs-btn", "data-tone": category === key ? "primary" : undefined, onClick: () => setCategory(key) },
-								label + "  " + (data.counts ? data.counts[key] : 0)
+								T(label) + "  " + (data.counts ? data.counts[key] : 0)
 							)
 						),
-						h("span", { className: "lcs-note", style: { marginLeft: "auto" } }, "共 " + data.total + " 个文件 · 扫描于 " + fmtTime(data.generatedAt) + " · 本会话写过 " + data.writtenCount + " 个")
+						h("span", { className: "lcs-note", style: { marginLeft: "auto" } }, T("共 ") + data.total + T(" 个文件 · 扫描于 ") + fmtTime(data.generatedAt) + T(" · 本会话写过 ") + data.writtenCount + T(" 个"))
 					),
 					category === "rollback" && turnData ? h("section", { className: "lcs-block" },
-						h("div", { className: "lcs-block-head" }, h("b", null, "按对话轮查看变更"), h("em", null, "基于宿主记录；已释放的快照标记为不可用")),
+						h("div", { className: "lcs-block-head" }, h("b", null, T("按对话轮查看变更")), h("em", null, T("基于宿主记录；已释放的快照标记为不可用"))),
 						h("div", { className: "lcs-block-body" },
-							!turnData.available ? h("div", { className: "lcs-note" }, "当前会话未连接到宿主变更记录。") :
-							(turnData.turns || []).length === 0 ? h("div", { className: "lcs-note" }, "此会话尚无可查的工作区变更记录。") :
+							!turnData.available ? h("div", { className: "lcs-note" }, T("当前会话未连接到宿主变更记录。")) :
+							(turnData.turns || []).length === 0 ? h("div", { className: "lcs-note" }, T("此会话尚无可查的工作区变更记录。")) :
 							turnData.turns.map((entry) => h("div", { key: entry.turn, className: "lcs-item", style: { display: "block" } },
-								h("b", null, "第 " + entry.turn + " 轮"),
+								h("b", null, T("第 ") + entry.turn + T(" 轮")),
 								entry.versions.map((version, index) => h("div", { key: version.seq, className: "lcs-note", style: { padding: "6px 0" } },
-									(entry.versions.length > 1 ? "版本 " + (index + 1) + " · " : "") + (version.available ? version.files.length + " 个文件" : "历史记录的快照已释放") + " · " + fmtTime(version.time),
+									(entry.versions.length > 1 ? T("版本 ") + (index + 1) + " · " : "") + (version.available ? version.files.length + T(" 个文件") : T("历史记录的快照已释放")) + " · " + fmtTime(version.time),
 									version.available ? h("div", null, version.files.map((file) => h("div", { key: file.path, className: "lcs-mono" }, file.display || file.path))) : null
 								))
 							))
@@ -2954,20 +3237,20 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						? h(
 								"section",
 								{ className: "lcs-block" },
-								h("div", { className: "lcs-block-head" }, h("b", null, "按轮可回滚的文件"), h("em", null, "插件在写文件前复制的前像；恢复时原内容会另存一份")),
+								h("div", { className: "lcs-block-head" }, h("b", null, T("按轮可回滚的文件")), h("em", null, T("插件在写文件前复制的前像；恢复时原内容会另存一份"))),
 								h(
 									"div",
 									{ className: "lcs-block-body" },
 									(preData.turns || []).length === 0
-										? h("div", { className: "lcs-note" }, preData.note || "本次载入后尚未观察到写文件调用，没有可回滚的前像。")
+										? h("div", { className: "lcs-note" }, preData.note || T("本次载入后尚未观察到写文件调用，没有可回滚的前像。"))
 										: preData.turns.slice(-8).reverse().map((entry) =>
 												h("div", { key: entry.turn, style: { padding: "6px 0" } },
-													h("b", null, "第 " + entry.turn + " 轮 · " + entry.files.length + " 个文件"),
+													h("b", null, T("第 ") + entry.turn + T(" 轮 · ") + entry.files.length + T(" 个文件")),
 													entry.files.map((file) =>
 														h("div", { key: file.backup, className: "lcs-row", style: { padding: "3px 0" } },
 															h("span", { className: "lcs-mono lcs-grow" }, file.path),
 															h("span", { className: "lcs-note" }, fmtSize(file.size) + " · " + relTime(file.at)),
-															h("button", { className: "lcs-btn", "data-tone": "primary", onClick: () => doRestore({ path: file.path }, file.backup) }, "恢复到这一轮之前")
+															h("button", { className: "lcs-btn", "data-tone": "primary", onClick: () => doRestore({ path: file.path }, file.backup) }, T("恢复到这一轮之前"))
 														)
 													)
 												)
@@ -2975,29 +3258,29 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 								)
 							)
 						: null,
-					h("div", { className: "lcs-row" }, h("span", { className: "lcs-note" }, "文件类型"), h("select", { className: "lcs-select", value: fileType, onChange: (e) => setFileType(e.target.value) }, ["全部类型", "文档", "图片", "代码", "文本与数据", "其他类型"].map((type) => h("option", { key: type, value: type }, type))), h("span", { className: "lcs-note" }, "当前显示 " + rows.length + " 项；类型按扩展名识别")),
+					h("div", { className: "lcs-row" }, h("span", { className: "lcs-note" }, T("文件类型")), h("select", { className: "lcs-select", value: fileType, onChange: (e) => setFileType(e.target.value) }, ["全部类型", "文档", "图片", "代码", "文本与数据", "其他类型"].map((type) => h("option", { key: type, value: type }, T(type)))), h("span", { className: "lcs-note" }, T("当前显示 ") + rows.length + T(" 项；类型按扩展名识别"))),
 					category === "temp"
 						? h(
 								"div",
 								{ className: "lcs-row" },
-								h("button", { className: "lcs-btn", onClick: () => setPicked(new Set(rows.map((row) => row.path))) }, "全选当前列表"),
-								h("button", { className: "lcs-btn", onClick: () => setPicked(new Set()) }, "清除选择"),
-								h("button", { className: "lcs-btn", "data-tone": "danger", disabled: picked.size === 0, onClick: () => previewClean([...picked]) }, "预览清理 " + picked.size + " 个"),
-								h("span", { className: "lcs-note" }, "只处理勾选的文件；先备份到 lc-plugin/backups，再改名为 .retired-时间戳")
+								h("button", { className: "lcs-btn", onClick: () => setPicked(new Set(rows.map((row) => row.path))) }, T("全选当前列表")),
+								h("button", { className: "lcs-btn", onClick: () => setPicked(new Set()) }, T("清除选择")),
+								h("button", { className: "lcs-btn", "data-tone": "danger", disabled: picked.size === 0, onClick: () => previewClean([...picked]) }, T("预览清理 ") + picked.size + T(" 个")),
+								h("span", { className: "lcs-note" }, T("只处理勾选的文件；先备份到 lc-plugin/backups，再改名为 .retired-时间戳"))
 							)
 						: null,
 					preview
 						? h(
 								"section",
 								{ className: "lcs-block" },
-								h("div", { className: "lcs-block-head" }, h("b", null, "清理预览"), h("em", null, preview.count + " 个 · 合计 " + fmtSize(preview.totalBytes))),
+								h("div", { className: "lcs-block-head" }, h("b", null, T("清理预览")), h("em", null, preview.count + T(" 个 · 合计 ") + fmtSize(preview.totalBytes))),
 								h(
 									"div",
 									{ className: "lcs-block-body" },
-									preview.rows.map((row) => h("div", { key: row.path, className: "lcs-mono", style: { padding: "2px 0" } }, (row.exists ? fmtSize(row.size) : "已不存在") + "  " + row.path)),
+									preview.rows.map((row) => h("div", { key: row.path, className: "lcs-mono", style: { padding: "2px 0" } }, (row.exists ? fmtSize(row.size) : T("已不存在")) + "  " + row.path)),
 									h("div", { className: "lcs-row", style: { marginTop: 8 } },
-										h("button", { className: "lcs-btn", "data-tone": "danger", onClick: runClean }, "确认清理 " + preview.count + " 个"),
-										h("button", { className: "lcs-btn", onClick: () => setPreview(undefined) }, "取消")
+										h("button", { className: "lcs-btn", "data-tone": "danger", onClick: runClean }, T("确认清理 ") + preview.count + T(" 个")),
+										h("button", { className: "lcs-btn", onClick: () => setPreview(undefined) }, T("取消"))
 									)
 								)
 							)
@@ -3006,20 +3289,20 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 						? h(
 								"section",
 								{ className: "lcs-block" },
-								h("div", { className: "lcs-block-head" }, h("b", null, "备份"), h("em", null, backups.path)),
+								h("div", { className: "lcs-block-head" }, h("b", null, T("备份")), h("em", null, backups.path)),
 								h(
 									"div",
 									{ className: "lcs-block-body" },
 									backups.rows.length === 0
-										? h("div", { className: "lcs-note" }, "没有本插件的备份，无法从这里恢复。")
+										? h("div", { className: "lcs-note" }, T("没有本插件的备份，无法从这里恢复。"))
 										: backups.rows.map((entry) =>
 												h("div", { key: entry.backup, className: "lcs-row" },
 													h("span", { className: "lcs-note" }, fmtTime(entry.mtime) + " · " + fmtSize(entry.size)),
 													h("span", { className: "lcs-mono lcs-grow" }, entry.stamp),
-													h("button", { className: "lcs-btn", "data-tone": "primary", onClick: () => doRestore({ path: backups.path }, entry.backup) }, "恢复这个备份")
+													h("button", { className: "lcs-btn", "data-tone": "primary", onClick: () => doRestore({ path: backups.path }, entry.backup) }, T("恢复这个备份"))
 												)
 											),
-									h("div", { className: "lcs-row", style: { marginTop: 8 } }, h("button", { className: "lcs-btn", onClick: () => setBackups(undefined) }, "关闭"))
+									h("div", { className: "lcs-row", style: { marginTop: 8 } }, h("button", { className: "lcs-btn", onClick: () => setBackups(undefined) }, T("关闭")))
 								)
 							)
 						: null,
@@ -3033,14 +3316,14 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 									{ className: "lcs-row", style: { marginBottom: 8 } },
 									h("b", { className: "lcs-grow" }, viewer.row.name),
 									h("span", { className: "lcs-note" }, fmtSize(viewer.size) + " · " + relTime(viewer.row.mtime)),
-									h("button", { className: "lcs-btn", onClick: () => setViewer(undefined) }, "关闭"),
-									h("button", { className: "lcs-btn", onClick: () => open(viewer.row, "open") }, "用系统程序打开")
+									h("button", { className: "lcs-btn", onClick: () => setViewer(undefined) }, T("关闭")),
+									h("button", { className: "lcs-btn", onClick: () => open(viewer.row, "open") }, T("用系统程序打开"))
 								),
 								viewer.mode === "text"
 									? h("pre", null, viewer.text)
 									: viewer.mode === "image"
 										? h("img", { alt: viewer.row.name, src: "data:image/" + (viewer.ext || "png").replace(".", "") + ";base64," + viewer.base64 })
-										: h("div", { className: "lcs-note" }, "这个类型没有内置阅读器（" + (viewer.ext || viewer.mode) + "），请用系统程序打开。")
+										: h("div", { className: "lcs-note" }, T("这个类型没有内置阅读器（") + (viewer.ext || viewer.mode) + T("），请用系统程序打开。"))
 							)
 						: null,
 					h(
@@ -3050,7 +3333,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							"div",
 							{ className: "lcs-block-body", style: { padding: 8 } },
 							rows.length === 0
-								? h("div", { className: "lcs-note" }, "这一分类下没有文件。")
+								? h("div", { className: "lcs-note" }, T("这一分类下没有文件。"))
 								: h(
 										"div",
 										{ className: "lcs-list", style: { maxHeight: "none" } },
@@ -3075,12 +3358,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 														: null,
 													h("span", { className: "lcs-dot", "data-s": "ok" }),
 													h("b", { className: "lcs-grow" }, row.name),
-													h("span", { className: "lcs-note" }, fmtSize(row.size) + " · " + relTime(row.mtime) + (row.versionCount ? " · " + row.versionCount + " 个版本" : "")),
-													category === "rollback" || category === "final" ? h("button", { className: "lcs-btn", onClick: () => lookBackups(row) }, "查备份") : null,
-													h("button", { className: "lcs-btn", onClick: () => open(row, "select") }, "定位"),
-													h("button", { className: "lcs-btn", onClick: () => read(row) }, "阅读"),
-													h("button", { className: "lcs-btn", onClick: () => open(row, "open") }, "打开"),
-													h("button", { className: "lcs-btn", "data-tone": "danger", onClick: () => retire(row) }, "移出")
+													h("span", { className: "lcs-note" }, fmtSize(row.size) + " · " + relTime(row.mtime) + (row.versionCount ? " · " + row.versionCount + T(" 个版本") : "")),
+													category === "rollback" || category === "final" ? h("button", { className: "lcs-btn", onClick: () => lookBackups(row) }, T("查备份")) : null,
+													h("button", { className: "lcs-btn", onClick: () => open(row, "select") }, T("定位")),
+													h("button", { className: "lcs-btn", onClick: () => read(row) }, T("阅读")),
+													h("button", { className: "lcs-btn", onClick: () => open(row, "open") }, T("打开")),
+													h("button", { className: "lcs-btn", "data-tone": "danger", onClick: () => retire(row) }, T("移出"))
 												),
 												h("div", { className: "lcs-mono" }, row.path),
 												row.versions
@@ -3137,12 +3420,12 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 		/** 打开（或聚焦）右栏的 lc-station 页，并定位到某一格。返回错误文本，成功返回 null。 */
 		function openRight(view, sessionId) {
 			setRightView(view);
-			if (typeof rightState.open !== "function") return "右栏服务不可用（sidebarRight 未就绪）";
+			if (typeof rightState.open !== "function") return T("右栏服务不可用（sidebarRight 未就绪）");
 			try {
 				rightState.open(view, sessionId ?? null);
 				return null;
 			} catch (err) {
-				return "openTab 失败：" + ((err && err.message) || String(err));
+				return T("openTab 失败：") + ((err && err.message) || String(err));
 			}
 		}
 
@@ -3162,6 +3445,28 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 			const [tab, setTab] = useState("canvas");
 			const [sessionId, setSessionId] = useState(null);
 			const [err, setErr] = useState(null);
+			const [lang, setLang] = useState(LANG);
+			LANG = lang;
+			const pickLang = (next) => {
+				LANG = next;
+				try {
+					localStorage.setItem("lcs-lang", next);
+				} catch {
+					/* private mode: the switch still works for this render */
+				}
+				setLang(next);
+			};
+			const langSwitch = h(
+				"div",
+				{ className: "lcs-tabs lcs-tabs-sm lcs-lang" },
+				["zh", "en"].map((code) =>
+					h(
+						"button",
+						{ key: code, className: "lcs-tab", "data-active": String(lang === code), title: code === "zh" ? "中文" : "English", onClick: () => pickLang(code) },
+						code === "zh" ? "中" : "EN"
+					)
+				)
+			);
 			const { data } = useJson("/lc/sessions", 4000);
 
 			useEffect(() => {
@@ -3176,7 +3481,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 				h(
 					"div",
 					{ className: "lcs-head" },
-					h("div", { className: "lcs-title" }, h("h1", null, "工作站"), h("span", null, "lc-station")),
+					h("div", { className: "lcs-title" }, h("h1", null, T("工作站")), h("span", null, "lc-station")),
 					h(
 						"div",
 						{ className: "lcs-row", style: { gap: 8 } },
@@ -3185,26 +3490,27 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 									"select",
 									{ className: "lcs-select", style: { width: 300 }, value: sessionId ?? "", onChange: (e) => setSessionId(e.target.value) },
 									(data.sessions || []).map((row) =>
-										h("option", { key: row.sessionId, value: row.sessionId }, row.sessionId.slice(0, 24) + " · " + row.cards + " 张 · " + relTime(row.updatedAt))
+										h("option", { key: row.sessionId, value: row.sessionId }, row.sessionId.slice(0, 24) + " · " + row.cards + T(" 张 · ") + relTime(row.updatedAt))
 									)
 								)
-							: h("span", { className: "lcs-note" }, "暂无活动会话")
+							: h("span", { className: "lcs-note" }, T("暂无活动会话"))
 					),
+					langSwitch,
 					h(
 						"div",
 						{ className: "lcs-tabs" },
 						TABS.map((item) =>
-							h("button", { key: item.id, className: "lcs-tab", "data-active": String(tab === item.id), onClick: () => setTab(item.id) }, item.label)
+							h("button", { key: item.id, className: "lcs-tab", "data-active": String(tab === item.id), onClick: () => setTab(item.id) }, T(item.label))
 						)
 					)
 				),
 				h(
 					"div",
 					{ className: "lcs-sub" },
-					h("span", null, "画布：session/event 增量折叠，只增不改"),
-					h("span", null, "记忆：磁盘 + 事件规则抽取，可改可导入"),
-					h("span", null, "调用：读活服务，改动回读确认"),
-					h("span", null, "产出：有界扫描，定位/阅读/比版本")
+					h("span", null, T("画布：session/event 增量折叠，只增不改")),
+					h("span", null, T("记忆：磁盘 + 事件规则抽取，可改可导入")),
+					h("span", null, T("调用：读活服务，改动回读确认")),
+					h("span", null, T("产出：有界扫描，定位/阅读/比版本"))
 				),
 				h(StationBody, { tab, sessionId })
 			);
@@ -3216,28 +3522,51 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 		function RightPane(props) {
 			const sessionId = props && props.sessionId ? props.sessionId : null;
 			const [tab, setTab] = useRightView();
+			const [lang, setLang] = useState(LANG);
+			LANG = lang;
+			const pickLang = (next) => {
+				LANG = next;
+				try {
+					localStorage.setItem("lcs-lang", next);
+				} catch {
+					/* private mode */
+				}
+				setLang(next);
+			};
+			const langSwitch = h(
+				"div",
+				{ className: "lcs-tabs lcs-tabs-sm lcs-lang" },
+				["zh", "en"].map((code) =>
+					h(
+						"button",
+						{ key: code, className: "lcs-tab", "data-active": String(lang === code), title: code === "zh" ? "中文" : "English", onClick: () => pickLang(code) },
+						code === "zh" ? "中" : "EN"
+					)
+				)
+			);
 			return h(
 				"div",
 				{ className: "lcs-root lcs-pane" },
 				h(
 					"div",
 					{ className: "lcs-pane-head" },
-					h("span", { className: "lcs-pane-title" }, "工作站"),
-					h("span", { className: "lcs-chip" }, sessionId ? "当前对话" : "最近对话"),
+					h("span", { className: "lcs-pane-title" }, T("工作站")),
+					h("span", { className: "lcs-chip" }, sessionId ? T("当前对话") : T("最近对话")),
 					h(
 						"div",
 						{ className: "lcs-tabs lcs-tabs-sm" },
 						TABS.map((item) =>
-							h("button", { key: item.id, className: "lcs-tab", "data-active": String(tab === item.id), onClick: () => setTab(item.id) }, item.label)
+							h("button", { key: item.id, className: "lcs-tab", "data-active": String(tab === item.id), onClick: () => setTab(item.id) }, T(item.label))
 						)
-					)
+					),
+					langSwitch
 				),
 				h(StationBody, { tab, sessionId })
 			);
 		}
 
 		function RightPaneTitle() {
-			return h("span", { className: "lcs-chip" }, "工作站");
+			return h("span", { className: "lcs-chip" }, T("工作站"));
 		}
 
 		/* ────────────────────────────── apply ────────────────────────────── */
@@ -3258,7 +3587,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							{
 								name: "main",
 								key: PANEL_ID,
-								label: () => "工作站"
+								label: () => T("工作站")
 							},
 							StationPage
 						)
@@ -3271,7 +3600,7 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 								name: "sidebar.panellist",
 								id: PANEL_ID,
 								order: 12,
-								label: () => "工作站"
+								label: () => T("工作站")
 							},
 							LcStationIcon
 						)
@@ -3312,13 +3641,13 @@ body[data-ds-dark-theme] .cv-scope .cv-card { box-shadow: 0 20px 48px -22px rgba
 							tabTypes.register({
 								id: PANEL_ID,
 								kind: "lc-station",
-								title: () => "工作站",
+								title: () => T("工作站"),
 								guide: [
 									{
 										id: "lc-station-pane",
 										order: 12,
-										title: () => "工作站",
-										description: () => "画布 / 记忆 / 调用 / 产出，跟着当前对话走"
+										title: () => T("工作站"),
+										description: () => T("画布 / 记忆 / 调用 / 产出，跟着当前对话走")
 									}
 								]
 							}),

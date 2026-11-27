@@ -52,9 +52,9 @@ export function transcriptOf(cards) {
 	return text;
 }
 
-export function summaryKey(marks, lastBand) {
+export function summaryKey(marks, lastBand, lang = "zh") {
 	const last = marks[marks.length - 1];
-	return `${marks.length}:${last?.at ?? 0}:${lastBand}`;
+	return `${lang}:${marks.length}:${last?.at ?? 0}:${lastBand}`;
 }
 
 /** Cached one-liner for this marker state, if it was already generated. */
@@ -71,7 +71,7 @@ export function readSummary(sessionId, key) {
 }
 
 /** Fire-and-forget: asks the model once per marker state and caches the answer. */
-export function ensureSummary(sessionId, key, transcript) {
+export function ensureSummary(sessionId, key, transcript, lang = "zh") {
 	if (inFlight.has(sessionId)) return;
 	const readable = apiKey();
 	if (readable === undefined) return;
@@ -91,9 +91,11 @@ export function ensureSummary(sessionId, key, transcript) {
 						{
 							role: "system",
 							content:
-								"你在填一个「最终产出」面板的说明行。读完整个对话，用一句中文说清这次到底做成了什么：做出来的东西就写它是什么，修的问题就写修好了什么。不超过 60 字，不加引号、不加编号、不罗列过程、不写「本次对话」这类开场。"
+								lang === "en"
+									? "You are filling the one-line note of a Final output panel. Read the whole conversation and say in ONE English sentence what was actually produced: if something was built, name it; if a problem was fixed, say what is fixed now. Write everything in English, including UI labels and command words you see in Chinese. No more than 25 words, no quotes, no numbering, no recap of steps, no opener like this conversation."
+									: "你在填一个「最终产出」面板的说明行。读完整个对话，用一句中文说清这次到底做成了什么：做出来的东西就写它是什么，修的问题就写修好了什么。不超过 60 字，不加引号、不加编号、不罗列过程、不写「本次对话」这类开场。"
 						},
-						{ role: "user", content: `对话如下：\n${transcript}` }
+						{ role: "user", content: `${lang === "en" ? "Conversation" : "对话如下"}：\n${transcript}` }
 					]
 				}),
 				signal: controller.signal

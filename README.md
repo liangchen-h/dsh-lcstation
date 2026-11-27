@@ -1,5 +1,7 @@
 # LC Station · DSH Workstation
 
+**中文** · [English](README.en.md)
+
 > A local workstation for [DeepSeek Harness](https://github.com/deepseek-ai) — the session event
 > stream folded into a card-chain canvas, plus memory, calls and outputs panes.
 > 把 DSH 的会话事件流折成一张卡片链画布，外加记忆 / 调用 / 产出三个面板。纯本地运行，不对聊天路径调模型。
@@ -28,6 +30,9 @@ DSH 每一轮对话都在产生事件：用户消息、模型回复、工具调�
 | 产出 | 限定目录扫描、按对话轮查变更与前像、临时文件批量清理、**最终产出**清单 |
 
 ![calls](media/calls.png)
+
+整个面板支持中英双语：**中 / EN** 开关在工作站页右上角、视图标签旁边，选择记在 `localStorage`。
+卡片里的对话原文不翻译。
 
 ## 最终产出（结束标记）
 
@@ -128,6 +133,10 @@ scripts/
   sync-plugin.mjs       # 部署目录 → 仓库副本
   layout-probe.mjs      # 用真实卡片离线跑布局函数
 ```
+
+## 联系
+
+问题、bug、想法：**3415299607@qq.com**，或直接开 issue。
 
 ## License
 

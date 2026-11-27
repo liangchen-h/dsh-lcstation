@@ -841,16 +841,17 @@ function routes(ctx) {
 					})
 					.filter((row) => row.exists)
 					.sort((a, b) => b.mtime - a.mtime);
+				const lang = url.searchParams.get("lang") === "en" ? "en" : "zh";
 				const own = stripEndMark(last.full);
 				let summary = own;
 				if (own.length < 8) {
 					const cardsUpTo = (board?.cards ?? []).filter((card) => Number(card.band ?? 0) <= last.band);
-					const key = summaryKey(marks, last.band);
+					const key = summaryKey(marks, last.band, lang);
 					const cached = readSummary(sessionId, key);
-					if (cached === undefined) ensureSummary(sessionId, key, transcriptOf(cardsUpTo));
+					if (cached === undefined) ensureSummary(sessionId, key, transcriptOf(cardsUpTo), lang);
 					summary = cached ?? summaryOf(board, last, from);
 				}
-				json(res, { ok: true, hasMarker: true, marks, segment: { from, to: last.band }, summary, summaryPending: own.length < 8 && readSummary(sessionId, summaryKey(marks, last.band)) === undefined, rows, count: rows.length });
+				json(res, { ok: true, hasMarker: true, marks, segment: { from, to: last.band }, summary, summaryPending: own.length < 8 && readSummary(sessionId, summaryKey(marks, last.band, lang)) === undefined, rows, count: rows.length });
 			}
 		},
 		{
