@@ -1,7 +1,7 @@
 {
   "name": "lc-station",
-  "version": "0.1.0",
-  "description": "LC Workstation for DSH: canvas card chain folded from the session event stream, plus memory / calls / outputs views. No model calls on the chat path.",
+  "version": "0.2.0",
+  "description": "LC Workstation for DSH: card-chain canvas folded from the session event stream, plus memory / calls / outputs views, bilingual UI (zh / en). No model calls on the chat path.",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
@@ -25,7 +25,17 @@
     "lib",
     "cordis.patch.yml"
   ],
-  "keywords": ["dsh", "plugin", "workstation", "canvas", "card-chain", "session-events"],
+  "keywords": [
+    "dsh",
+    "plugin",
+    "workstation",
+    "canvas",
+    "card-chain",
+    "session-events",
+    "i18n",
+    "marketplace",
+    "observability"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/liangchen-h/lc-station.git"
