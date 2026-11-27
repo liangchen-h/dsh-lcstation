@@ -134,6 +134,10 @@ scripts/
   layout-probe.mjs      # 用真实卡片离线跑布局函数
 ```
 
+## 上架到 DSH 市场
+
+仓库自带一份 format-1 索引 [`market/plugins.json`](market/plugins.json)，DSH 可以直接指向它（`DSHM_REGISTRY_URL=<url>`）；进官方精选列表的路子（往 `awesome-dsh-plugin` 提 PR，一天内生效）见 [docs/MARKET.md](docs/MARKET.md)。
+
 ## 联系
 
 问题、bug、想法：**3415299607@qq.com**，或直接开 issue。

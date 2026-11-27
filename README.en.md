@@ -149,6 +149,10 @@ scripts/
   layout-probe.mjs      # runs the layout functions offline on real cards
 ```
 
+## Listing on the DSH market
+
+The repo ships a format-1 index at [`market/plugins.json`](market/plugins.json) that DSH can point at directly (`DSHM_REGISTRY_URL=<url>`). For the official curated list (a PR to `awesome-dsh-plugin`, effective within a day), see [docs/MARKET.md](docs/MARKET.md).
+
 ## Contact
 
 Questions, bug reports, ideas: **3415299607@qq.com** — or open an issue on this repository.
