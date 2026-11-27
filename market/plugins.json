@@ -10,12 +10,32 @@
   },
   "metadata": {
     "categories": {
-      "observability": { "title": { "en": "Observability", "zh": "观测" } },
-      "workspace": { "title": { "en": "Workspace", "zh": "工作区" } }
+      "observability": {
+        "title": {
+          "en": "Observability",
+          "zh": "观测"
+        }
+      },
+      "workspace": {
+        "title": {
+          "en": "Workspace",
+          "zh": "工作区"
+        }
+      }
     },
     "labels": {
-      "bilingual": { "title": { "en": "Bilingual", "zh": "中英双语" } },
-      "local-only": { "title": { "en": "Local only", "zh": "纯本地" } }
+      "bilingual": {
+        "title": {
+          "en": "Bilingual",
+          "zh": "中英双语"
+        }
+      },
+      "local-only": {
+        "title": {
+          "en": "Local only",
+          "zh": "纯本地"
+        }
+      }
     }
   },
   "plugins": [
@@ -37,8 +57,18 @@
       },
       "metadata": {
         "category": "observability",
-        "keywords": ["workstation", "canvas", "card-chain", "session-events", "outputs", "i18n"],
-        "labels": ["bilingual", "local-only"]
+        "keywords": [
+          "workstation",
+          "canvas",
+          "card-chain",
+          "session-events",
+          "outputs",
+          "i18n"
+        ],
+        "labels": [
+          "bilingual",
+          "local-only"
+        ]
       },
       "versions": [
         {
@@ -47,7 +77,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/liangchen-h/dsh-lcstation.git",
-            "commit": "fddbb91e99a9bdcd4d27262741c59200801e06c9",
+            "commit": "70d9f26f5ad90f09c6df31b8a5cae3bcf9d35ace",
             "path": "plugin"
           },
           "engines": {
