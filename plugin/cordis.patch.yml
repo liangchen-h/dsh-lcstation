@@ -1,0 +1,8 @@
+# lc-station bundle patch: insert this package's own row so the modules node half
+# discovers it as a web plugin. `id` is the Loader entry id; `name` is the npm
+# package whose `dsh.client` manifest + `exports["./client"]` the modules node
+# half scans. This row ALSO carries the Host half (package `main` -> lib/index.js),
+# so one row serves both sides.
+- insert:
+    - id: lc-station
+      name: 'lc-station'

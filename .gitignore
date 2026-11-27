@@ -1,0 +1,27 @@
+# 运行态：会话缓存、备份、临时状态（含会话 ID 与本机路径，一律不入库）
+.runtime/
+backups/
+state/
+
+# 依赖与日志
+node_modules/
+*.log
+
+# 本机工作记录（部署路径、调试命令、会话抓包），不随仓库发布
+PLAN.md
+report.md
+
+# 一次性调试脚本：保留在本地，不进仓库
+scripts/t-*.mjs
+scripts/test-fold.mjs
+scripts/capture-dsh.ps1
+scripts/lc-post.ps1
+scripts/ui-send.ps1
+scripts/raise-click.ps1
+
+# 录制素材中间产物
+media/_work/
+
+# 系统垃圾
+Thumbs.db
+.DS_Store
